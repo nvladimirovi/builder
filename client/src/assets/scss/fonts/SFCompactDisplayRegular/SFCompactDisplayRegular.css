@@ -1,9 +1,0 @@
-@font-face {
-    font-family: 'SFCompactDisplayRegular';
-    src: url('fonts/SFCompactDisplayRegular.eot');
-    src: url('fonts/SFCompactDisplayRegular.eot') format('embedded-opentype'),
-         url('fonts/SFCompactDisplayRegular.woff2') format('woff2'),
-         url('fonts/SFCompactDisplayRegular.woff') format('woff'),
-         url('fonts/SFCompactDisplayRegular.ttf') format('truetype'),
-         url('fonts/SFCompactDisplayRegular.svg#SFCompactDisplayRegular') format('svg');
-}
