@@ -1,0 +1,3 @@
+.email {
+    @include flexbox(stretch, row nowrap, space-between);
+}

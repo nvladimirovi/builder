@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'SFCompactDisplaySemibold';
+    src: url('fonts/SFCompactDisplaySemibold.eot');
+    src: url('fonts/SFCompactDisplaySemibold.eot') format('embedded-opentype'),
+         url('fonts/SFCompactDisplaySemibold.woff2') format('woff2'),
+         url('fonts/SFCompactDisplaySemibold.woff') format('woff'),
+         url('fonts/SFCompactDisplaySemibold.ttf') format('truetype'),
+         url('fonts/SFCompactDisplaySemibold.svg#SFCompactDisplaySemibold') format('svg');
+}

@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'SFCompactDisplayBlack';
+    src: url('fonts/SFCompactDisplayBlack.eot');
+    src: url('fonts/SFCompactDisplayBlack.eot') format('embedded-opentype'),
+         url('fonts/SFCompactDisplayBlack.woff2') format('woff2'),
+         url('fonts/SFCompactDisplayBlack.woff') format('woff'),
+         url('fonts/SFCompactDisplayBlack.ttf') format('truetype'),
+         url('fonts/SFCompactDisplayBlack.svg#SFCompactDisplayBlack') format('svg');
+}

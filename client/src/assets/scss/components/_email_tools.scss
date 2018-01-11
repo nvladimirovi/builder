@@ -1,0 +1,24 @@
+.tools {
+    border: 1px solid transparent;
+    border-left-color: color(darkgrey);
+    padding: 30px;
+    width: cp(390, 1230);
+}
+
+.tools-nav {
+    @include flexbox(center, row nowrap, space-between);
+    list-style: none;
+    width: 100%;
+
+    li {
+        border-bottom: 1px solid color(darkgrey);
+        padding: 15px 0;
+        text-align: center;
+        width: 100%;
+
+        &.active {
+            border: 1px solid color(darkgrey);
+            border-bottom: transparent;
+        } 
+    }
+}

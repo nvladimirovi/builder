@@ -1,0 +1,25 @@
+@import 
+    'assets/scss/abstracts/variables', //variables
+    'assets/scss/abstracts/functions', //functions
+    'assets/scss/abstracts/mixins', //mixins
+    'assets/scss/abstracts/placeholders'; //mixins
+
+@import //Base
+    'assets/scss/base/base', 
+    'assets/scss/base/reset';
+
+@import 
+    'assets/scss/components/fonts',
+    'assets/scss/components/btn',
+    'assets/scss/components/email',
+    'assets/scss/components/email_result',
+    'assets/scss/components/email_tools'; 
+
+@import //Layout
+    'assets/scss/layout/header',
+    'assets/scss/layout/navigation',
+    'assets/scss/layout/forms',
+    'assets/scss/layout/footer';
+
+@import 
+    'assets/scss/pages/home';

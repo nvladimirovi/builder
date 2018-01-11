@@ -1,0 +1,20 @@
+// SASS VARIABLES
+
+//Fonts
+$SFReg: 'SFCompactDisplayRegular';
+$SFMedium: 'SFCompactDisplayMedium';
+
+$SFBold: 'SFCompactDisplayBold';
+$SFSemiBold: 'SFCompactDisplaySemibold';
+
+// SASSS Maps.
+// Output with map-get($colors, ...). Check _functions.scss.
+// Usage: .foo { color: color(white); // #fff }
+$colors: (
+    black: #000,
+    white: #fff,
+    lightgrey: #f1f1f1,
+    darkgrey: #969696,
+    blue: #3b97db
+);
+

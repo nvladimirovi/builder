@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'SFCompactDisplayUltralight';
+    src: url('fonts/SFCompactDisplayUltralight.eot');
+    src: url('fonts/SFCompactDisplayUltralight.eot') format('embedded-opentype'),
+         url('fonts/SFCompactDisplayUltralight.woff2') format('woff2'),
+         url('fonts/SFCompactDisplayUltralight.woff') format('woff'),
+         url('fonts/SFCompactDisplayUltralight.ttf') format('truetype'),
+         url('fonts/SFCompactDisplayUltralight.svg#SFCompactDisplayUltralight') format('svg');
+}

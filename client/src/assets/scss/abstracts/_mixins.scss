@@ -1,0 +1,41 @@
+// SASS MIXINS
+
+@mixin flexbox($alignitems: false, $flexflow: false, $justifycontent: false) {
+    @if $alignitems { 
+        align-items: $alignitems; 
+        -webkit-align-items: $alignitems; 
+    }
+
+    display: flex;
+    display: -webkit-flex;
+
+    @if $flexflow { 
+        flex-flow: $flexflow; 
+        -webkit-flex-flow: $flexflow; 
+    }
+
+    @if $justifycontent { 
+        justify-content: $justifycontent;
+        -webkit-justify-content: $justifycontent;
+    }
+}
+
+@mixin bgi($size, $position, $repeat) {
+    background: {
+        size: $size !important;
+        position: $position !important;
+        repeat: $repeat !important;
+    }
+}
+
+@mixin transform($x, $y) {
+    transform: translate($x, $y);
+    -webkit-transform: translate($x, $y);
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder { @content };
+  &:-moz-placeholder           { @content };
+  &::-moz-placeholder          { @content };
+  &:-ms-input-placeholder      { @content };
+}

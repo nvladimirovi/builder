@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'SFCompactDisplayBold';
+    src: url('fonts/SFCompactDisplayBold.eot');
+    src: url('fonts/SFCompactDisplayBold.eot') format('embedded-opentype'),
+         url('fonts/SFCompactDisplayBold.woff2') format('woff2'),
+         url('fonts/SFCompactDisplayBold.woff') format('woff'),
+         url('fonts/SFCompactDisplayBold.ttf') format('truetype'),
+         url('fonts/SFCompactDisplayBold.svg#SFCompactDisplayBold') format('svg');
+}

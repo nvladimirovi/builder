@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>My Cool Blog System</title>
+	<link href="/css/site.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+	<div class="container">
+		<ul class="menu">
+			<li>
+				<a href="/">Home</a>
+			</li>
+			<li>
+				<a href="/about">About</a>
+			</li>
+			<li></li>
+			{{#if currentUser}}
+			<li>{{currentUser.username}}</li>
+			<li>
+				<form id="logout-form" action="/users/logout" method="POST"></form>
+				<a href="javascript:document.getElementById('logout-form').submit()">Logout</a>
+			</li>
+			{{else}}
+			<li>
+				<a href="/users/register">Register</a>
+			</li>
+			<li>
+				<a href="/users/login">Login</a>
+			</li>
+			{{/if}}
+		</ul>
+		{{#if globalError}}
+		<h3>{{globalError}}</h3>
+		{{/if}} {{{body}}}
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	 crossorigin="anonymous"></script>
+
+	<script>
+		class TreeNode {
+			constructor(element) {
+				this.element = element;
+				this.hasParent = false;
+				this.children = [];
+			}
+
+			getElement() {
+				return this.element;
+			}
+
+			setElement(element) {
+				this.element = element;
+			}
+
+			addChild(child) {
+				if (child == null) {
+					throw new IllegalArgumentException("Cannot insert null value!");
+				}
+
+				if (child.hasParent) {
+					throw new IllegalArgumentException("The node already has a parent!");
+				}
+
+				child.root.hasParent = true;
+				this.children.push(child);
+			}
+
+			getChild(index) {
+				return this.children[index];
+			}
+
+			getChildrenCount() {
+				return this.children.length;
+			}
+		}
+		
+		class Tree {
+			/**
+			 * Constructs the tree.
+			 * @param value - the value of the node.
+			 */
+
+			constructor(element, child) {
+				this.root = new TreeNode(element);
+				this.structure = [];
+
+				if (child) {
+					for (let i = 0; i < child.length; i++) {
+						this.root.addChild(child[i]);
+					}
+				}
+			}
+
+			getRoot() {
+				return this.root;
+			}
+
+			getChildNodes() {
+				if (this.root != null) return this.root.children;
+
+				return [];
+			}
+
+			createTreeStructure(element) {
+				this.structure.push(element);
+			}
+
+			getTreeStructure() {
+				this.printDFS(this.root, "  ");
+				return this.structure;
+			}
+
+			printDFS(root, spaces) {
+				if (this.root == null) return;
+
+				let structure = [];
+
+				if (root.getElement().type === "img") {
+					this.createTreeStructure("<" + root.getElement().type + "/>");
+				} else {
+					this.createTreeStructure("<" + root.getElement().type + ">" + (!root.getElement().innerText ? "" : root.getElement().innerText));
+				}
+
+				//console.log(spaces, root.getElement());
+				//console.log("<" + root.getElement().type + ">");
+				let child = null;
+
+				for (let i = 0; i < root.getChildrenCount(); i++) {
+					child = root.getChild(i).root;
+					this.printDFS(child, spaces + " ");
+				}
+
+				//console.log("</" + root.getElement().type + ">");
+				if (root.getElement().type === "img") {
+					return true
+				} else {
+					this.createTreeStructure("</" + root.getElement().type + ">");
+				}
+			}
+
+			checkStructure() {
+				this.printDFS(this.root, "  ");
+			}
+		}
+
+		const test = new Tree({ type: "html" }, [
+			new Tree({ type: "head" }, [new Tree({ type: "script" })]),
+			new Tree({ type: "body" }, [
+				new Tree({ type: "div", class: "template" }, [
+					new Tree({
+						type: "h1",
+						innerText: "h1",
+						attr: [{ class: ["font16px"] }]
+					}),
+					new Tree({
+						type: "p",
+						innerText: "p",
+						attr: [{ class: ["font16px"] }]
+					})
+				])
+			])
+		]);
+
+		$(window).on("load", function() {
+			$.ajax({
+				type: "POST",
+				url: "/template/create",
+				data: test,
+				success: function(data) {
+					console.log(123);
+				}
+			});
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+.site-header {
+    border-bottom: 1px solid color(darkgrey);
+} 
+
+.menu {
+    @include flexbox(center, row nowrap, space-between);
+    padding: 20px 0; 
+
+    h1 {
+        font: {
+            size: calculateRem(12px);
+            weight: bold;
+        }
+    }
+
+    .desktop-nav {
+        @include flexbox(center, row nowrap, space-between);
+        width: cp(320, 1230);
+
+        a {
+            width: cp(85, 320);
+        }
+    }
+}

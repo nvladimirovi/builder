@@ -1,0 +1,21 @@
+.btn {
+    border-radius: 0;
+    color: color(darkgray);
+    display: block;
+    padding: 8px 0;
+    text-align: center;
+    text-transform: uppercase;
+    font: {
+        size: calculateRem(12px); 
+    }
+
+    &.grey_border {
+        border: 1px solid color(darkgray);
+    }
+
+    &.blue {
+        background: color(blue);
+        border: none;
+        color: color(white); 
+    }
+}
