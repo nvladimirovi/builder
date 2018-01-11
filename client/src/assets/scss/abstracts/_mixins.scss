@@ -39,3 +39,9 @@
   &::-moz-placeholder          { @content };
   &:-ms-input-placeholder      { @content };
 }
+
+@mixin box-shadow($horizontal, $vertical, $blur, $spread, $color, $opacity) {
+    -webkit-box-shadow: $horizontal $vertical $blur $spread rgba($color, $opacity);
+    -moz-box-shadow: $horizontal $vertical $blur $spread rgba($color, $opacity);
+    box-shadow: $horizontal $vertical $blur $spread rgba($color, $opacity);
+}

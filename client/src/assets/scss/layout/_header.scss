@@ -1,5 +1,6 @@
 .site-header {
-    border-bottom: 1px solid color(darkgrey);
+    @include box-shadow(0, 1px, 19px, -4px, color(black), 0.75); 
+    border-bottom: 1px solid color(darkgrey); 
 } 
 
 .menu {
@@ -8,9 +9,11 @@
 
     h1 {
         font: {
+            family: $OS;
             size: calculateRem(12px);
             weight: bold;
         }
+        text-transform: uppercase;
     }
 
     .desktop-nav {

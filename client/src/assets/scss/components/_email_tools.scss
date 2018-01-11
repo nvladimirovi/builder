@@ -20,5 +20,12 @@
             border: 1px solid color(darkgrey);
             border-bottom: transparent;
         } 
+
+        a {
+            color: color(darkgrey);
+            font: {
+                family: $OS;
+            }
+        }
     }
 }
