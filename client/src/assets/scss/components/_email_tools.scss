@@ -2,7 +2,12 @@
     border: 1px solid transparent;
     border-left-color: color(darkgrey);
     padding: 30px;
+    max-height: 700px;
     width: cp(390, 1230);
+
+    .content {
+        padding: 20px 0;
+    }
 }
 
 .tools-nav {
@@ -26,6 +31,56 @@
             font: {
                 family: $OS;
             }
+        }
+    }
+}
+
+.content-tools {
+    label,
+    input {
+        display: block;
+    }
+
+    .type-of-element {
+        background: color(grey);
+        color: color(black);
+        padding: 13px 0;
+        font: {
+            family: $OS;
+            size: calculateRem(12px);
+        }
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .options {
+        .btn {
+            text-transform: capitalize;
+            margin: 25px auto;
+            max-width: 85px;
+        }
+
+        .input-container {
+            @include flexbox(center, row nowrap, space-between);
+
+            label {
+                color: color(black);
+                font: {
+                    family: $OS;
+                    size: calculateRem(12px);
+                }
+                max-width: 65px;
+            }
+
+            input {
+                border: 1px solid color(black);
+                padding: 5px;
+                width: cp(195, 328);
+            }
+        }
+
+        .collapse {
+            
         }
     }
 }

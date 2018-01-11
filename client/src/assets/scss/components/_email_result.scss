@@ -8,7 +8,15 @@
     overflow-y: scroll;
 
     &::-webkit-scrollbar {
-        background: color(darkgray);
         width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: color(darkgrey);
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
     }
 }
