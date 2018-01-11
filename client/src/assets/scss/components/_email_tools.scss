@@ -2,6 +2,7 @@
     border: 1px solid transparent;
     border-left-color: color(darkgrey);
     padding: 30px;
+    padding-right: 15px;
     max-height: 700px;
     width: cp(390, 1230);
 
@@ -41,46 +42,221 @@
         display: block;
     }
 
-    .type-of-element {
-        background: color(grey);
-        color: color(black);
-        padding: 13px 0;
-        font: {
-            family: $OS;
-            size: calculateRem(12px);
-        }
-        text-align: center;
-        text-transform: uppercase;
-    }
-
     .options {
         .btn {
             text-transform: capitalize;
             margin: 25px auto;
             max-width: 85px;
         }
+    }
+}
 
-        .input-container {
-            @include flexbox(center, row nowrap, space-between);
+.tools-collapse {
+    list-style: none;
 
-            label {
-                color: color(black);
-                font: {
-                    family: $OS;
-                    size: calculateRem(12px);
-                }
-                max-width: 65px;
+    .toggle {
+        position: absolute;
+        top: 13px;
+        right: 28px;
+        height: 15px;
+        width: 15px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:before,
+        &:after {
+            background: color(darkgrey);
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 14px;
+        }
+
+        &:after {
+            transform: rotate(90deg);
+        }
+
+        &.active {
+            &:after {
+                transform: rotate(0deg);
             }
+        }
+    }
 
-            input {
-                border: 1px solid color(black);
-                padding: 5px;
-                width: cp(195, 328);
+    .title {
+        border: {
+            top: 1px solid color(darkgrey);
+            bottom: 1px solid color(darkgrey);
+        }
+        display: block;
+        padding: 10px 20px;
+        position: relative;
+        font: {
+            family: $OS;
+            size: calculateRem(12px);
+            weight: 600;
+        }
+    }
+
+    .inner-content {
+        display: none;
+        padding: 25px 0;
+        list-style: none;
+
+        &.active {
+            display: block;
+        }
+
+        li {
+            border: 0;
+        }
+    }
+}
+
+.type-of-element {
+    background: color(grey);
+    color: color(black);
+    padding: 13px 0;
+    font: {
+        family: $OS;
+        size: calculateRem(12px);
+    }
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.input-container {
+    @include flexbox(center, row nowrap, space-between);
+    padding: 25px 20px;
+    
+    label {
+        color: color(black);
+        font: {
+            family: $OS;
+            size: calculateRem(12px);
+        }
+        max-width: 65px;
+    }
+
+    input {
+        border: 1px solid color(black);
+        padding: 5px;
+        width: cp(195, 288);
+    }
+}
+
+.range {
+    .irs {
+        position: relative;
+        margin: 0 auto;
+        max-width: 200px;
+    }
+
+    .irs-line {
+        background: #a3a3a3;
+        height: 4px;
+    }
+
+    .irs-single {
+        top: -6px;
+        
+        &:before {
+            background: color(grey);
+            border-radius: 50%;
+            content: "";
+            display: block;
+            margin: 0 auto;
+            height: 15px;
+            width: 15px;
+        }
+    }
+
+    .flex {
+        @include flexbox(center, row nowrap, space-between);
+        padding-top: 25px;
+
+        label,
+        input {
+            color: color(black);
+            font: {
+                family: $OS;
+                size: calculateRem(12px);
+            }
+        }
+    }
+}
+
+.number-component {
+    @include flexbox(center, row nowrap, space-between);
+    max-width: 105px;
+
+    .flex {
+        @include flexbox(center, row nowrap, space-between);
+        padding: 0;
+    }
+
+    .controls {
+        border: 1px solid color(darkgrey);
+        position: relative;
+        height: 15px;
+        width: 15px;
+
+        &.minus,
+        &.plus {
+            &:before,
+            &:after {
+                background: color(darkgrey);
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
             }
         }
 
-        .collapse {
-            
+        &.minus {
+            &:after {
+                display: none;
+            }
+
+            &:before {
+                @include transform(-50%, -50%);
+                height: 2px;
+                width: 8px;
+            }
+        }
+
+        &.plus {
+            &:after {
+                @include transform(-50%, -50%);
+                height: 8px;
+                width: 1px;
+            }
+
+            &:before {
+                @include transform(-50%, -50%);
+                height: 2px;
+                width: 8px;
+            }
+        }
+    }
+
+    label {
+        padding-right: 20px;
+    }
+
+    input {
+        -webkit-appearance: none;
+        max-width: 47px;
+        text-align: center;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
         }
     }
 }

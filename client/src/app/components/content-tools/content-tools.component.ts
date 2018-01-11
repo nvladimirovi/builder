@@ -21,6 +21,11 @@ export class ContentToolsComponent implements OnInit {
     $("#range").ionRangeSlider({
       max: 640
     });
+
+    $(".tools-collapse .toggle").on("click", function() {
+      $(this).toggleClass("active");
+      $(this).parent().children(".inner-content").toggleClass("active");
+    });
   }
  
 }

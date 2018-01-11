@@ -17,6 +17,7 @@ import { ToolsNavComponent } from './components/tools-nav/tools-nav.component';
 import { LayoutToolsComponent } from './components/layout-tools/layout-tools.component';
 import { ContentToolsComponent } from './components/content-tools/content-tools.component';
 import { SettingsToolsComponent } from './components/settings-tools/settings-tools.component';
+import { NumberComponentComponent } from './components/number-component/number-component.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SettingsToolsComponent } from './components/settings-tools/settings-too
     LayoutToolsComponent,
     ContentToolsComponent,
     SettingsToolsComponent,
+    NumberComponentComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule],
   providers: [CollectableService],
