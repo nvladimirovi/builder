@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
+//Components
 import { LayoutToolsComponent } from "./components/layout-tools/layout-tools.component";
 import { ContentToolsComponent } from "./components/content-tools/content-tools.component";
 import { SettingsToolsComponent } from "./components/settings-tools/settings-tools.component";
