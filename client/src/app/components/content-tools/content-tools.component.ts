@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { EmailService } from "../../shared/email/email.service"
 
 /**
  * This component uses range slider which
@@ -14,19 +15,54 @@ declare var $: any;
 	styleUrls: ["./content-tools.component.css"]
 })
 export class ContentToolsComponent implements OnInit {
-  constructor() {}
+	private _selected_element = this.emailService.selected_element;
 
-  ngOnInit() {
-    $("#range").ionRangeSlider({
-      	max: 640
-    });
+	/**
+	 * Init the range lib
+	 */
+	private _initRange() {
+		$("#range").ionRangeSlider({ max: 640 });
+	}
 
-    $(".tools-collapse .toggle").on("click", function() {
+	/**
+	 * Init the collapse dropdowns
+	 */
+	private _initCollapse() {
+		$(".tools-collapse .toggle").on("click", function() {
 		$(this).toggleClass("active");
 		$(this)
 			.parent()
 			.children(".inner-content")
 			.toggleClass("active");
-	});
-  }
+    	});
+	}
+
+	/**
+	 * Bind events on init
+	 */
+	private _bindEvents() {
+		this._initRange();
+		this._initCollapse();
+	}
+	
+	/**
+	 * Get selected element
+	 */
+	public get selected_element() {
+		return this._selected_element;
+	}
+	
+	/**
+	 * Set selected element 
+	 */
+	public set selected_element(value) {
+		this._selected_element = value;
+	}
+	
+	constructor(private emailService: EmailService) {}
+	
+	ngOnInit() {
+		this._bindEvents();
+		this.selected_element = this.emailService.selected_element;
+	}
 }

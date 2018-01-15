@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { EmailService } from "../../shared/email/email.service"
 declare var $: any;
 
 @Component({
@@ -10,7 +10,12 @@ declare var $: any;
 export class EmailComponent implements OnInit {
 	private event_targets = ".result table, .result tr, .result td, .result a, .result p, .result img";
 	private _selected_element;
-	
+
+	/**
+	 * Get the x, y position of the 
+	 * element.
+	 * @param event 
+	 */
 	private _getElementPosition(event) {
 		let leftPos = $(event.currentTarget).offset().left;
 		let rightPos = leftPos + $(event.currentTarget).width();
@@ -19,61 +24,74 @@ export class EmailComponent implements OnInit {
 		let bottomPos = topPos + $(event.currentTarget).height();
 	}
 
-  	private _drawGrid() {
+	/**
+	 * Draw the grid lines.
+	 */
+	private _drawGrid() {
 		const self = this;
 
 		$(self.event_targets).hover(function(event) {
-			event.preventDefault();
-			event.stopPropagation();
+		event.preventDefault();
+		event.stopPropagation();
 
-			const element = $(this);
+		const element = $(this);
 
-			$(self.event_targets).css({
-				outline: "none"
-			});
-			
-			element.css({
-				outline: "1px solid #3b97db"
-			});
+		$(self.event_targets).css({
+			outline: "none"
+		});
 
+		element.css({
+			outline: "1px solid #3b97db"
+		});
 		});
 	}
 
+	/**
+	 * Selects elements.
+	 */
 	private _selectElement() {
 		const self = this;
-		
+
 		$(self.event_targets).on("click", function(event) {
-			event.preventDefault();
-			event.stopPropagation();
+		event.preventDefault();
+		event.stopPropagation();
 
-			const element = $(this);
+		$(".ng_selected_item").removeClass("ng_selected_item");
 
-			element.css({
-				outline: "1px solid #d620d6"
-			});
+		const element = $(this);
 
-			self.selected_element = element;
+		element.addClass("ng_selected_item");
+
+		self.selected_element = element;
 		});
 	}
-	
+
+	/**
+	 * Bind events on init
+	 */
 	private _bindEvents() {
 		this._drawGrid();
 		this._selectElement();
 	}
 
+	/**
+	 * Get selected element
+	 */
 	public get selected_element() {
-		console.log(this._selected_element);
 		return this._selected_element;
 	}
-	
+
+	/**
+	 * Set selected element
+	 */
 	public set selected_element(value) {
 		this._selected_element = value;
-		this.selected_element;
+		this.emailService.selected_element = this.selected_element;
 	}
-	
-	constructor() {}
 
-  	ngOnInit() {
+	constructor(private emailService: EmailService) {}
+
+	ngOnInit() {
 		this._bindEvents();
 	}
 }

@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 //Service 
 import { CollectableService } from "app/shared/collectable/collectable.service";
+import { EmailService } from "app/shared/email/email.service";
 
 //Routing 
 import { AppRoutingModule } from "app/app-routing.module";
@@ -44,11 +45,11 @@ import { EmailComponent } from './components/email/email.component';
     SizeComponent,
     AlignmentComponent,
     SpacingComponent,
-    EmailComponent,
+    EmailComponent
   ],
   exports: [],
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule],
-  providers: [CollectableService],
+  providers: [CollectableService, EmailService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
