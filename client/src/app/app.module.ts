@@ -21,6 +21,7 @@ import { NumberComponentComponent } from './components/number-component/number-c
 import { SizeComponent } from './components/size/size.component';
 import { AlignmentComponent } from './components/alignment/alignment.component';
 import { SpacingComponent } from './components/spacing/spacing.component';
+import { EmailComponent } from './components/email/email.component';
 
 /**
  * Declarations - the view classes that belong to this module. Angular has three kinds of view classes: components, directives, and pipes.
@@ -43,6 +44,7 @@ import { SpacingComponent } from './components/spacing/spacing.component';
     SizeComponent,
     AlignmentComponent,
     SpacingComponent,
+    EmailComponent,
   ],
   exports: [],
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule],
