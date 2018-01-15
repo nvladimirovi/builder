@@ -15,11 +15,11 @@
 		<label for="y">Y:</label>
 
 		<span class="flex">
-			<span class="controls minus"></span>
+			<span (click)="dec()" class="controls minus"></span>
 
-			<input type="number" name="y" value="20">
+			<input type="number" name="y" [value]="value">
 
-			<span class="controls plus"></span>
+			<span (click)="inc()" class="controls plus"></span>
 		</span>
 	</span>
 </span>
