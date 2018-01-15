@@ -1,25 +1,11 @@
-<span class="flex">
-	<span class="number-component">
-		<label for="x">X:</label>
+<span class="number-component">
+	<label *ngIf="label">{{ label }}</label>
 
-		<span class="flex">
-			<span class="controls minus"></span>
+	<span class="flex">
+		<span (click)="dec()" class="controls minus"></span>
 
-			<input type="number" name="x" value="20">
+		<input type="number" name="y" [(ngModel)]="value">
 
-			<span class="controls plus"></span>
-		</span>
-	</span>
-
-	<span class="number-component">
-		<label for="y">Y:</label>
-
-		<span class="flex">
-			<span (click)="dec()" class="controls minus"></span>
-
-			<input type="number" name="y" [value]="value">
-
-			<span (click)="inc()" class="controls plus"></span>
-		</span>
+		<span (click)="inc()" class="controls plus"></span>
 	</span>
 </span>

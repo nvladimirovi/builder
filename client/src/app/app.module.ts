@@ -18,6 +18,9 @@ import { LayoutToolsComponent } from './components/layout-tools/layout-tools.com
 import { ContentToolsComponent } from './components/content-tools/content-tools.component';
 import { SettingsToolsComponent } from './components/settings-tools/settings-tools.component';
 import { NumberComponentComponent } from './components/number-component/number-component.component';
+import { SizeComponent } from './components/size/size.component';
+import { AlignmentComponent } from './components/alignment/alignment.component';
+import { SpacingComponent } from './components/spacing/spacing.component';
 
 /**
  * Declarations - the view classes that belong to this module. Angular has three kinds of view classes: components, directives, and pipes.
@@ -37,6 +40,9 @@ import { NumberComponentComponent } from './components/number-component/number-c
     ContentToolsComponent,
     SettingsToolsComponent,
     NumberComponentComponent,
+    SizeComponent,
+    AlignmentComponent,
+    SpacingComponent,
   ],
   exports: [],
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule],

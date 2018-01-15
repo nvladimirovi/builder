@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Input } from "@angular/core";
 
 @Component({
 	selector: "app-number-component",
@@ -6,22 +7,21 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./number-component.component.css"]
 })
 export class NumberComponentComponent implements OnInit {
-	value: number = 0;
+	@Input() private label: string;
+	private value: number = 0;
 
   	constructor() {}
 
   	dec() {
-		if (this.value !== 1) {
+		if (this.value >= 1) {
 			this.value--;
 		}
-		console.log("dec", this.value);	 
 	}
 
   	inc() {
-		if (this.value !== 100) {
+		if (this.value <= 100) {
 			this.value++;
 		}
-		console.log("inc", this.value);	 
 	}
 
   	ngOnInit() {}

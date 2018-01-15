@@ -4,7 +4,16 @@
     padding: 30px;
     padding-right: 15px;
     max-height: 700px;
+    overflow-y: scroll;
     width: cp(390, 1230);
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: color(darkgrey);
+    }
 
     .content {
         padding: 20px 0;
@@ -88,10 +97,6 @@
     }
 
     .title {
-        border: {
-            top: 1px solid color(darkgrey);
-            bottom: 1px solid color(darkgrey);
-        }
         display: block;
         padding: 10px 20px;
         position: relative;
@@ -104,15 +109,22 @@
 
     .inner-content {
         display: none;
-        padding: 25px 0;
         list-style: none;
 
         &.active {
             display: block;
         }
 
-        li {
-            border: 0;
+        .inner-item {
+            border: 0 !important;
+        }
+    }
+
+    .collapse-item {
+        border-top: 1px solid color(darkgrey);  
+
+        &:last-child {
+            border-bottom: 1px solid color(darkgrey);
         }
     }
 }
@@ -150,6 +162,8 @@
 }
 
 .range {
+    padding: 25px 0;
+
     .irs {
         position: relative;
         margin: 0 auto;
@@ -186,6 +200,41 @@
                 family: $OS;
                 size: calculateRem(12px);
             }
+        }
+    }
+}
+
+.alignment {
+    @include flexbox(flex-start, row wrap, space-between);
+    padding: 25px 0;
+
+    .alignment_item {
+        padding-bottom: 20px;
+        width: 50%;
+
+        &:nth-last-child(2), 
+        &:nth-last-child(1) {
+            padding-bottom: 0;
+        } 
+    }
+}
+
+.spacing {
+    padding: 25px 0 0 0;
+
+    .number-component {
+        @include flexbox(center, row nowrap, flex-start);
+        padding-bottom: 25px;
+        max-width: none;
+
+        .flex {
+            width: cp(77, 303);
+        }
+
+        label {
+            display: block;
+            padding-right: 100px;
+            width: 50%;
         }
     }
 }
@@ -245,6 +294,11 @@
     }
 
     label {
+        font: {
+            family: $OS;
+            size: calculateRem(12px);
+            weight: 400;
+        }
         padding-right: 20px;
     }
 
@@ -259,4 +313,46 @@
             margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
         }
     }
+}
+
+.styled-checkbox {
+    position: absolute; // take it out of document flow
+	opacity: 0; // hide it
+	
+	& + label {
+		position: relative;
+		cursor: pointer;
+		padding: 0;
+	}
+
+	// Box.
+	& + label:before {
+		border: 1px solid color(darkgray);
+		content: '';
+		margin-right: 10px;
+		display: inline-block;
+		vertical-align: text-top;
+		width: 15px;
+		height: 15px;
+		background: white;
+	}
+
+	// Checkmark. Could be replaced with an image
+	&:checked + label:after {
+		content: '';
+		position: absolute;
+		left: 2px;
+		top: 6px;
+		background: color(darkgray);
+		width: 2px;
+		height: 2px;
+		box-shadow: 
+		2px 0 0 color(darkgray),
+		4px 0 0 color(darkgray),
+		4px -2px 0 color(darkgray),
+		4px -4px 0 color(darkgray),
+		4px -6px 0 color(darkgray),
+		4px -8px 0 color(darkgray);
+		transform: rotate(45deg);
+	}
 }

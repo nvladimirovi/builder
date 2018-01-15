@@ -12,21 +12,18 @@
 			<input type="text">
 		</div>
 
-		<ul class="tools-collapse">
-			<li>
-				<span class="title">
-					Size <span class="toggle"></span>
+		<div class="tools-collapse">
+			<div class="collapse-item">
+				<app-size></app-size>
+			</div>
 
-					<ul class="inner-content">
-						<li class="range">
-							<input id="range" type="range" value="0">
-					
-							
-							<app-number-component></app-number-component>
-						</li>
-					</ul>
-				</span>
-			</li>
-		</ul>
+			<div class="collapse-item">
+				<app-alignment></app-alignment>
+			</div>
+
+			<div class="collapse-item">
+				<app-spacing></app-spacing>
+			</div>
+		</div>
 	</div>
 </div>
