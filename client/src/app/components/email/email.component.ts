@@ -31,18 +31,18 @@ export class EmailComponent implements OnInit {
 		const self = this;
 
 		$(self.event_targets).hover(function(event) {
-		event.preventDefault();
-		event.stopPropagation();
+			event.preventDefault();
+			event.stopPropagation();
 
-		const element = $(this);
+			const element = $(this);
 
-		$(self.event_targets).css({
-			outline: "none"
-		});
+			$(self.event_targets).css({
+				outline: "none"
+			});
 
-		element.css({
-			outline: "1px solid #3b97db"
-		});
+			element.css({
+				outline: "1px solid #3b97db"
+			});
 		});
 	}
 
@@ -53,16 +53,17 @@ export class EmailComponent implements OnInit {
 		const self = this;
 
 		$(self.event_targets).on("click", function(event) {
-		event.preventDefault();
-		event.stopPropagation();
+				event.preventDefault();
+				event.stopPropagation();
 
-		$(".ng_selected_item").removeClass("ng_selected_item");
+				$(".ng_selected_item").removeClass("ng_selected_item");
 
-		const element = $(this);
+				const element = $(this);
 
-		element.addClass("ng_selected_item");
+				element.addClass("ng_selected_item");
 
-		self.selected_element = element;
+				self.emailService.setSelectedElement(element);
+				self.selected_element = self.emailService.getSelectedElement()[0].tagName;
 		});
 	}
 
@@ -86,7 +87,6 @@ export class EmailComponent implements OnInit {
 	 */
 	public set selected_element(value) {
 		this._selected_element = value;
-		this.emailService.selected_element = this.selected_element;
 	}
 
 	constructor(private emailService: EmailService) {}

@@ -49,7 +49,7 @@ import { EmailComponent } from './components/email/email.component';
   ],
   exports: [],
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule],
-  providers: [CollectableService, EmailService],
+  providers: [EmailService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
