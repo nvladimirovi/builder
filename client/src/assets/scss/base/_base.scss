@@ -9,10 +9,13 @@
     max-width: 1230px;
 }
 
-.ng_selected_item,
-.ng_hovered_item {
-    display: block;
+font {
+    &.ng_selected_item,
+    &.ng_hovered_item {
+        display: block;
+    }
 }
+
 
 .ng_selected_item {
     outline: 1px solid color(pink) !important;
