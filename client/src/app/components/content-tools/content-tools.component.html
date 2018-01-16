@@ -1,5 +1,5 @@
 <div class="content-tools">
-	<h2 class="type-of-element">Image options {{ selected_element }}</h2>
+	<h2 *ngIf="element_props" class="type-of-element"> {{ element_props.tagName }} options</h2>
 
 	<div class="options">
 		<a href="#" class="btn blue">Load Image</a>

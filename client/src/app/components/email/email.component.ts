@@ -8,63 +8,14 @@ declare var $: any;
 	styleUrls: ["./email.component.css"]
 })
 export class EmailComponent implements OnInit {
-	private event_targets = ".result table, .result tr, .result td, .result a, .result p, .result img";
 	private _selected_element;
 
-	/**
-	 * Get the x, y position of the 
-	 * element.
-	 * @param event 
-	 */
-	private _getElementPosition(event) {
-		let leftPos = $(event.currentTarget).offset().left;
-		let rightPos = leftPos + $(event.currentTarget).width();
-
-		let topPos = $(event.currentTarget).offset().top;
-		let bottomPos = topPos + $(event.currentTarget).height();
-	}
-
-	/**
-	 * Draw the grid lines.
-	 */
 	private _drawGrid() {
-		const self = this;
-
-		$(self.event_targets).hover(function(event) {
-			event.preventDefault();
-			event.stopPropagation();
-
-			const element = $(this);
-
-			$(self.event_targets).css({
-				outline: "none"
-			});
-
-			element.css({
-				outline: "1px solid #3b97db"
-			});
-		});
+		this.emailService.drawGrid();
 	}
 
-	/**
-	 * Selects elements.
-	 */
 	private _selectElement() {
-		const self = this;
-
-		$(self.event_targets).on("click", function(event) {
-				event.preventDefault();
-				event.stopPropagation();
-
-				$(".ng_selected_item").removeClass("ng_selected_item");
-
-				const element = $(this);
-
-				element.addClass("ng_selected_item");
-
-				self.emailService.setSelectedElement(element);
-				self.selected_element = self.emailService.getSelectedElement()[0].tagName;
-		});
+		this.emailService.selectElement();
 	}
 
 	/**

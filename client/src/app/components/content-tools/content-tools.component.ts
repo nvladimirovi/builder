@@ -11,71 +11,77 @@ import { OnChanges, DoCheck } from "@angular/core/src/metadata/lifecycle_hooks";
 declare var $: any;
 
 @Component({
-  selector: "app-content-tools",
-  templateUrl: "./content-tools.component.html",
-  styleUrls: ["./content-tools.component.css"]
+	selector: "app-content-tools",
+	templateUrl: "./content-tools.component.html",
+	styleUrls: ["./content-tools.component.css"]
 })
-export class ContentToolsComponent implements OnInit, DoCheck, OnChanges {
-  private _selected_element = "Content Tools Component";
+export class ContentToolsComponent implements OnInit, DoCheck {
+	private _selected_element;
+	private _element_props: ElementProps;
 
-  /**
-   * Init the range lib
-   */
-  private _initRange() {
-    $("#range").ionRangeSlider({ max: 640 });
-  }
+	/**
+	 * Init the collapse dropdowns
+	 */
+	private _initCollapse() {
+		$(".tools-collapse .toggle").on("click", function() {
+		$(this).toggleClass("active");
+		$(this)
+			.parent()
+			.children(".inner-content")
+			.toggleClass("active");
+		});
+	}
 
-  /**
-   * Init the collapse dropdowns
-   */
-  private _initCollapse() {
-    $(".tools-collapse .toggle").on("click", function() {
-      $(this).toggleClass("active");
-      $(this)
-        .parent()
-        .children(".inner-content")
-        .toggleClass("active");
-    });
-  }
+	/**
+	 * Bind events on init
+	 */
+	private _bindEvents() {
+		this._initCollapse();
+	}
 
-  /**
-   * Bind events on init
-   */
-  private _bindEvents() {
-    this._initRange();
-    this._initCollapse();
+	/**
+	 * Get selected element
+	 */
+	public get selected_element() {
+		return this._selected_element;
+	}
 
-    // $("html, body").on("click", () => {
-    // 	this.selected_element = this.emailService.getSelectedElement()[0].tagName;
-    // });
-  }
+	/**
+	 * Set selected element
+	 */
+	public set selected_element(value) {
+		this._selected_element = value;
+	}
 
-  /**
-   * Get selected element
-   */
-  public get selected_element() {
-    return this._selected_element;
-  }
+	public get element_props() {
+		return this._element_props;
+	}
 
-  /**
-   * Set selected element
-   */
-  public set selected_element(value) {
-    this._selected_element = value;
-  }
+	public set element_props(value) {
+		this._element_props = value;
+	}
 
-  constructor(private emailService: EmailService) {}
+	constructor(private emailService: EmailService) {}
 
-  ngOnChanges() {
-    console.log("ngOnChanges");
-  }
+	ngOnInit() {
+		this._bindEvents();
+		this.selected_element = this.emailService.selected_element;
+	}
 
-  ngOnInit() {
-    this._bindEvents();
-    this.selected_element = this.emailService.getSelectedElement();
-  }
+	ngDoCheck() {
+		this.selected_element = this.emailService.selected_element;
 
-  ngDoCheck() {
-    this.selected_element = this.emailService.getSelectedElement();
-  }
+		if(this.selected_element) {
+			this.element_props = {
+				tagName: this.selected_element[0].tagName,
+				width: this.selected_element.width()
+			}
+		}
+	}
+}
+
+
+interface ElementProps {
+	tagName: string,
+	width: number
 }
