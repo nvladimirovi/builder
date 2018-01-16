@@ -1,12 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { EmailService } from "../../shared/email/email.service"
 import { OnChanges, DoCheck } from "@angular/core/src/metadata/lifecycle_hooks";
 
-/**
- * This component uses range slider which
- * you can find here: https://www.npmjs.com/package/ion-rangeslider.
- * Demos : http://ionden.com/a/plugins/ion.rangeSlider/demo.html
- */
+import { EmailService } from "../../shared/email/email.service";
 
 declare var $: any;
 
@@ -71,10 +66,14 @@ export class ContentToolsComponent implements OnInit, DoCheck {
 	ngDoCheck() {
 		this.selected_element = this.emailService.selected_element;
 
-		if(this.selected_element) {
+		if (this.selected_element) {
+			
+			let { alt, tagName, src } = this.selected_element[0];
+
 			this.element_props = {
-				tagName: this.selected_element[0].tagName,
-				width: this.selected_element.width()
+				alt,
+				tagName,
+				src
 			}
 		}
 	}
@@ -82,6 +81,7 @@ export class ContentToolsComponent implements OnInit, DoCheck {
 
 
 interface ElementProps {
+	alt: string,
 	tagName: string,
-	width: number
+	src: string
 }

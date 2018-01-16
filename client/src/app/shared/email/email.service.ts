@@ -3,7 +3,7 @@ declare var $: any;
 
 @Injectable()
 export class EmailService {
-	private _event_targets = ".result table, .result tr, .result td, .result a, .result p, .result img";
+	private _event_targets = ".result table, .result tr, .result td, .result a, .result p, .result img, .result font";
 	private _selected_element;
 
 	/**
@@ -83,5 +83,6 @@ export class EmailService {
 	 */
 	public set selected_element(value) {
 		this._selected_element = value;
+		console.log("EmailService", this.selected_element);
 	}
 }
