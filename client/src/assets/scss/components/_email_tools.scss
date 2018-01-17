@@ -362,3 +362,58 @@
         }
     }
 }
+
+.styled-range {
+    width: 100%; /* Specific width is required for Firefox. */
+    background: transparent; /* Otherwise white in Chrome */
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+    }
+
+    &:focus {
+        outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+    }
+
+    &::-ms-track {
+        width: 100%;
+        cursor: pointer;
+
+        /* Hides the slider so custom styles can be added */
+        background: transparent; 
+        border-color: transparent;
+        color: transparent;
+    }
+
+    &::-webkit-slider-thumb {
+        background: color(grey);
+        -webkit-appearance: none;
+        border: 0;
+        border-radius: 50%;
+        height: 15px;
+        width: 15px;
+        cursor: pointer;
+        margin-top: -5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    }
+
+    /* All the same stuff for IE */
+    &::-ms-thumb {
+        background: color(grey);
+        -webkit-appearance: none;
+        border: 0;
+        border-radius: 50%;
+        height: 15px;
+        width: 15px;
+        cursor: pointer;
+        margin-top: -5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    }
+    
+    &::-webkit-slider-runnable-track {
+        background: color(darkgrey);
+        cursor: pointer;
+        height: 5px;
+        margin: 0 auto;
+        max-width: 200px;
+        width: 100%;
+    }
+}
