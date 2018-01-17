@@ -1,4 +1,4 @@
-<div class="content-component" [ngSwitch]="props.tagName">
+<div class="content-component" [ngSwitch]="current_element[0].tagName">
 	<div *ngSwitchCase="'IMG'">
 		<a href="#" class="btn blue">Load Image</a>
 		
@@ -7,11 +7,11 @@
 				Image SRC:
 			</label>
 		
-			<input type="text" value="example">
+			<input type="text" name="src" [(ngModel)]="current_element[0].src">
 		</div>
 	</div>
 
 	<div *ngSwitchDefault>
-		<textarea name="" id="" cols="30" rows="10"></textarea>
+		<textarea class="content-textarea" name="textContent" id="textContent" [(ngModel)]="current_element[0].textContent"></textarea>
 	</div>
 </div>

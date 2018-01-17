@@ -12,7 +12,6 @@ declare var $: any;
 })
 export class ContentToolsComponent implements OnInit, DoCheck {
 	private _selected_element;
-	private _element_props: ElementProps;
 
 	/**
 	 * Init the collapse dropdowns
@@ -48,14 +47,6 @@ export class ContentToolsComponent implements OnInit, DoCheck {
 		this._selected_element = value;
 	}
 
-	public get element_props() {
-		return this._element_props;
-	}
-
-	public set element_props(value) {
-		this._element_props = value;
-	}
-
 	constructor(private emailService: EmailService) {}
 
 	ngOnInit() {
@@ -65,23 +56,5 @@ export class ContentToolsComponent implements OnInit, DoCheck {
 
 	ngDoCheck() {
 		this.selected_element = this.emailService.selected_element;
-
-		if (this.selected_element) {
-			
-			let { alt, tagName, src } = this.selected_element[0];
-
-			this.element_props = {
-				alt,
-				tagName,
-				src
-			}
-		}
 	}
-}
-
-
-interface ElementProps {
-	alt: string,
-	tagName: string,
-	src: string
 }

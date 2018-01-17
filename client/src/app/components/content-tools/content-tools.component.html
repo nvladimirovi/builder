@@ -1,8 +1,8 @@
 <div class="content-tools">
-	<app-type-of-element *ngIf="element_props" [tagName]="element_props.tagName"></app-type-of-element>
+	<app-type-of-element *ngIf="selected_element"></app-type-of-element>
 
 	<div class="options">
-		<app-content-component *ngIf="element_props" [props]="element_props"></app-content-component>
+		<app-content-component *ngIf="selected_element"></app-content-component>
 		
 		<div class="tools-collapse">
 			<div class="collapse-item">
