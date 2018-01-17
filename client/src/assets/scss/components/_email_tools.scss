@@ -205,15 +205,19 @@
 }
 
 .alignment {
-    @include flexbox(flex-start, row wrap, space-between);
     padding: 25px 0;
 
     .alignment_item {
-        padding-bottom: 20px;
+        @include flexbox(flex-start, row nowrap, flex-start);
+        position: relative;
         width: 50%;
+    }
 
-        &:nth-last-child(2), 
-        &:nth-last-child(1) {
+    form {
+        @include flexbox(flex-start, row wrap, space-between);
+        padding-bottom: 20px;
+
+        &:last-child(1) {
             padding-bottom: 0;
         } 
     }
@@ -315,44 +319,46 @@
     }
 }
 
-.styled-checkbox {
-    position: absolute; // take it out of document flow
-	opacity: 0; // hide it
-	
-	& + label {
-		position: relative;
-		cursor: pointer;
-		padding: 0;
-	}
+.styled-radio {
+    position: absolute;
+    visibility: hidden;
 
-	// Box.
-	& + label:before {
-		border: 1px solid color(darkgray);
-		content: '';
-		margin-right: 10px;
-		display: inline-block;
-		vertical-align: text-top;
-		width: 15px;
-		height: 15px;
-		background: white;
-	}
+    &:checked ~ .check::before{
+        background: color(darkgray);
+        width: 2px;
+        height: 2px;
+        box-shadow: 
+        2px 0 0 color(darkgray),
+        4px 0 0 color(darkgray),
+        4px -2px 0 color(darkgray),
+        4px -4px 0 color(darkgray),
+        4px -6px 0 color(darkgray),
+        4px -8px 0 color(darkgray);
+        transform: rotate(45deg);
+    }
 
-	// Checkmark. Could be replaced with an image
-	&:checked + label:after {
-		content: '';
-		position: absolute;
-		left: 2px;
-		top: 6px;
-		background: color(darkgray);
-		width: 2px;
-		height: 2px;
-		box-shadow: 
-		2px 0 0 color(darkgray),
-		4px 0 0 color(darkgray),
-		4px -2px 0 color(darkgray),
-		4px -4px 0 color(darkgray),
-		4px -6px 0 color(darkgray),
-		4px -8px 0 color(darkgray);
-		transform: rotate(45deg);
-	}
+    & + label {
+        display: block;
+        padding-left: 25px;
+        position: relative;
+        z-index: 1;
+    }
+
+    & + label + .check {
+        display: block;
+        border: 1px solid color(darkgrey);
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 15px;
+        width: 15px;
+
+        // Checkmark. Could be replaced with an image
+        &:before {
+            content: '';
+            position: absolute;
+            left: 2px;
+            top: 6px;
+        }
+    }
 }
