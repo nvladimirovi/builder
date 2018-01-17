@@ -1,0 +1,11 @@
+.type-of-element {
+    background: color(grey);
+    color: color(black);
+    padding: 13px 0;
+    font: {
+        family: $OS;
+        size: calculateRem(12px);
+    }
+    text-align: center;
+    text-transform: uppercase;
+}

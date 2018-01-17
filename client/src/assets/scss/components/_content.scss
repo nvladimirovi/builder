@@ -1,0 +1,19 @@
+.content-component {
+    @include flexbox(center, row nowrap, space-between);
+    padding: 25px 20px;
+    
+    label {
+        color: color(black);
+        font: {
+            family: $OS;
+            size: calculateRem(12px);
+        }
+        max-width: 65px;
+    }
+
+    input {
+        border: 1px solid color(black);
+        padding: 5px;
+        width: cp(195, 288);
+    }
+}

@@ -1,0 +1,61 @@
+.radio {
+    padding-bottom: 20px;
+
+    &.flex {
+        @include flexbox(flex-start, row wrap, space-between);
+    }
+
+    &:last-child {
+        padding-bottom: 0;
+    }
+
+    .radio-item {
+        @include flexbox(flex-start, row nowrap, flex-start);
+        position: relative;
+        width: 50%;
+    }
+    
+    .styled-radio {
+        position: absolute;
+        visibility: hidden;
+
+        &:checked ~ .check::before{
+            background: color(darkgray);
+            width: 2px;
+            height: 2px;
+            box-shadow: 
+            2px 0 0 color(darkgray),
+            4px 0 0 color(darkgray),
+            4px -2px 0 color(darkgray),
+            4px -4px 0 color(darkgray),
+            4px -6px 0 color(darkgray),
+            4px -8px 0 color(darkgray);
+            transform: rotate(45deg);
+        }
+
+        & + label {
+            display: block;
+            padding-left: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        & + label + .check {
+            display: block;
+            border: 1px solid color(darkgrey);
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 15px;
+            width: 15px;
+
+            // Checkmark. Could be replaced with an image
+            &:before {
+                content: '';
+                position: absolute;
+                left: 2px;
+                top: 6px;
+            }
+        }
+    }
+}

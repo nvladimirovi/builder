@@ -1,0 +1,77 @@
+.number-component {
+    @include flexbox(center, row nowrap, space-between);
+    max-width: 105px;
+
+    .flex {
+        @include flexbox(center, row nowrap, space-between);
+        padding: 0;
+    }
+
+    .controls {
+        border: 1px solid color(darkgrey);
+        position: relative;
+        height: 15px;
+        width: 15px;
+
+        &.minus,
+        &.plus {
+            &:before,
+            &:after {
+                background: color(darkgrey);
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+        }
+
+        &.minus {
+            &:after {
+                display: none;
+            }
+
+            &:before {
+                @include transform(-50%, -50%);
+                height: 2px;
+                width: 8px;
+            }
+        }
+
+        &.plus {
+            &:after {
+                @include transform(-50%, -50%);
+                height: 8px;
+                width: 1px;
+            }
+
+            &:before {
+                @include transform(-50%, -50%);
+                height: 2px;
+                width: 8px;
+            }
+        }
+    }
+
+    label,
+    input {
+        font: {
+            family: $OS;
+            size: calculateRem(12px);
+            weight: 400;
+        }
+        padding-right: 20px;
+    }
+
+    input {
+        -webkit-appearance: none;   
+        text-align: center;
+        padding: 0;
+        max-width: 47px;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+    }
+}
