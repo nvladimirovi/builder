@@ -1,10 +1,17 @@
-<a href="#" class="btn blue">Load Image</a>
+<div class="content-component" [ngSwitch]="props.tagName">
+	<div *ngSwitchCase="'IMG'">
+		<a href="#" class="btn blue">Load Image</a>
+		
+		<div class="flex">
+			<label for="src">
+				Image SRC:
+			</label>
+		
+			<input type="text" value="example">
+		</div>
+	</div>
 
-<div class="content-component">
-	
-	<label for="src">
-		Image SRC:
-	</label>
-
-	<input type="text" value="example">
+	<div *ngSwitchDefault>
+		<textarea name="" id="" cols="30" rows="10"></textarea>
+	</div>
 </div>

@@ -1,6 +1,9 @@
 .content-component {
-    @include flexbox(center, row nowrap, space-between);
     padding: 25px 20px;
+
+    .flex {
+        @include flexbox(center, row nowrap, space-between);
+    }
     
     label {
         color: color(black);
