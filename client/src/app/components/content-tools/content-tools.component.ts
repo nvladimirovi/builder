@@ -18,11 +18,13 @@ export class ContentToolsComponent implements OnInit, DoCheck {
 	 */
 	private _initCollapse() {
 		$(".tools-collapse .toggle").on("click", function() {
-		$(this).toggleClass("active");
-		$(this)
-			.parent()
-			.children(".inner-content")
-			.toggleClass("active");
+			if ($(this).parent().children(".inner-content").length < 1) return;
+
+			$(this).toggleClass("active");
+			$(this)
+				.parent()
+				.children(".inner-content")
+				.toggleClass("active");
 		});
 	}
 

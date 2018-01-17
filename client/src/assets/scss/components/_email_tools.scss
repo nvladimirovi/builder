@@ -129,13 +129,13 @@
     }
 }
 
-.range,
+.size,
 .alignment,
 .spacing {
     padding: 25px 0;
 }
 
-.range {
+.size {
     .flex {
         @include flexbox(center, row nowrap, space-between);
         padding-top: 25px;
