@@ -12,6 +12,10 @@
 	</div>
 
 	<div *ngSwitchDefault>
+		<div *ngIf="current_element[0].tagName === 'A'">
+			<input type="text" name="href" [(ngModel)]="current_element[0].href">
+		</div>
+
 		<textarea class="content-textarea" name="textContent" id="textContent" [(ngModel)]="current_element[0].textContent"></textarea>
 	</div>
 </div>
