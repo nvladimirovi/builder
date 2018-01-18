@@ -14,7 +14,7 @@ export class NumberComponentComponent implements OnInit {
 	@Output() public onValueChanged = new EventEmitter<number>();
 
   	public dec() {
-		if (this.value >= 0) {
+		if (this.value > 0) {
 			this.value--;
 			this.onValueChanged.emit(this.value);
 		}
@@ -26,8 +26,10 @@ export class NumberComponentComponent implements OnInit {
 	}
 
 	public onChange(data: number) {
-		this.value = data;
-		this.onValueChanged.emit(this.value);
+		if (this.value >= 0) {
+			this.value = data;
+			this.onValueChanged.emit(this.value);
+		}
 	}
 
 	constructor() { }

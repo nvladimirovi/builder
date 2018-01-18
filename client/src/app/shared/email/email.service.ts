@@ -82,7 +82,9 @@ export class EmailService {
 	 * Set selected element
 	 */
 	public set selected_element(value) {
-		this._selected_element = value;
-		console.log("EmailService", this.selected_element);
+		if(value) {
+			this._selected_element = value;
+			console.log("EmailService", value);
+		}	
 	}
 }

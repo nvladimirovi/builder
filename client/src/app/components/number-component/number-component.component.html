@@ -4,7 +4,7 @@
 	<span class="flex">
 		<span (click)="dec()" class="controls minus"></span>
 
-		<input type="number" name="y" [value]="value" (change)="onChange($event.target.value)">
+		<input type="number" name="y" [min]="0" [value]="value" (change)="onChange($event.target.value)">
 
 		<span (click)="inc()" class="controls plus"></span>
 	</span>
