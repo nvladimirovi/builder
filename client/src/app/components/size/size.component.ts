@@ -15,7 +15,7 @@ declare var $:any;
   styleUrls: ['./size.component.css']
 })
 export class SizeComponent implements OnInit, DoCheck {
-  private _current_element: any;
+  private _element: any;
   private _range: any;
 
   private _initRangeSettings(settings: RangeSettings) {
@@ -28,17 +28,17 @@ export class SizeComponent implements OnInit, DoCheck {
   }
 
   private onRangeChange() {
-    this.current_element[0].width = this.range.value;
-    this.current_element[0].style.maxWidth = this.range.value + "px";
+    this.element.width = this.range.value;
+    this.element.style.maxWidth = this.range.value + "px";
   }
 
   private onWidthChange(value) {
-    this.current_element[0].width = value;
-    this.current_element[0].style.maxWidth = value + "px";
+    this.element.width = value;
+    this.element.style.maxWidth = value + "px";
   }
 
   private onHeightChange(value) {
-    this.current_element[0].height = value;
+    this.element.height = value;
   }
   
   public get range() : any {
@@ -49,25 +49,26 @@ export class SizeComponent implements OnInit, DoCheck {
     this._range = value;
   }
   
-  public get current_element() : any {
-    return this._current_element;
+  public get element() : any {
+    return this._element;
   }
   
-  public set current_element(value : any) {
-    this._current_element = value;
+  public set element(value : any) {
+    this._element = value;
   }
   
   constructor(private emailService: EmailService) { }
 
   ngOnInit() {
-    this.current_element = this.emailService.selected_element;
+    this.element = this.emailService.selected_element;
   }
 
   ngDoCheck() {
-    this.current_element = this.emailService.selected_element;
-    this._initRangeSettings({
-      min: 10,
-      max: 640
-    });
+    
+    if(this.emailService.selected_element) {
+      this.element = this.emailService.selected_element[0];
+      this._initRangeSettings({ min: 10, max: 640 });
+    }
+    
   }
 }

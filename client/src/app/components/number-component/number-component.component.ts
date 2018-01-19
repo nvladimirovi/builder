@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Input } from "@angular/core";
-import { Output } from "@angular/core/src/metadata/directives";
-import { EventEmitter } from "@angular/common/src/facade/async";
+import { Output } from "@angular/core";
+import { EventEmitter } from "@angular/core";
 
 @Component({
 	selector: "app-number-component",
@@ -10,7 +10,7 @@ import { EventEmitter } from "@angular/common/src/facade/async";
 })
 export class NumberComponentComponent implements OnInit {
 	@Input() public label: string;
-	@Input() public value: number;
+	@Input() public value: number = 0;
 	@Output() public onValueChanged = new EventEmitter<number>();
 
   	public dec() {

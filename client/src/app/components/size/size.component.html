@@ -2,12 +2,12 @@
 	Size
 	<div class="toggle"></div>
 
-	<div class="inner-content size" *ngIf="current_element">
-		<input class="styled-range" id="range" type="range" name="range" value="{{current_element[0].width}}" (change)="onRangeChange()">
+	<div class="inner-content size" *ngIf="element">
+		<input class="styled-range" id="range" type="range" name="range" value="{{element.width}}" (change)="onRangeChange()">
 
 		<div class="flex">
-			<app-number-component label="Width" [value]="current_element[0].width" (onValueChanged)="onWidthChange($event)"></app-number-component>
-			<app-number-component label="Height" [value]="current_element[0].height" (onValueChanged)="onHeightChange($event)"></app-number-component>
+			<app-number-component label="Width" [value]="element.clientWidth" (onValueChanged)="onWidthChange($event)"></app-number-component>
+			<app-number-component label="Height" [value]="element.clientHeight" (onValueChanged)="onHeightChange($event)"></app-number-component>
 		</div>
 	</div>
 </div>
