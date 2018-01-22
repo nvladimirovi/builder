@@ -5,17 +5,9 @@
 		<app-content-component *ngIf="selected_element"></app-content-component>
 		
 		<div class="tools-collapse">
-			<div class="collapse-item">
-				<app-size></app-size>
-			</div>
-
-			<div class="collapse-item">
-				<app-alignment></app-alignment>
-			</div>
-
-			<div class="collapse-item">
-				<app-spacing></app-spacing>
-			</div>
+			<app-size class="collapse-item"></app-size>
+			<app-alignment class="collapse-item"></app-alignment>
+			<app-spacing class="collapse-item"></app-spacing>
 		</div>
 	</div>
 </div>

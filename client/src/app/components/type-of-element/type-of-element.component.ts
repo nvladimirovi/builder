@@ -9,24 +9,29 @@ import { DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
   styleUrls: ['./type-of-element.component.css']
 })
 export class TypeOfElementComponent implements OnInit, DoCheck {
-  private _current_element: any;
+  private _tagName: string;
   
-  public get current_element(): any {
-    return this._current_element;
+  public get tagName(): string {
+    return this._tagName;
   }
   
-  public set current_element(value : any) {
-    this._current_element = value;
+  public set tagName(value : string) {
+    if(value) {
+      this._tagName = value;
+    }
   }
   
   constructor(private emailService: EmailService) { }
 
   ngOnInit() {
-    this.current_element = this.emailService.selected_element;
+    if(this.emailService.selected_element[0]) {
+      this.tagName = this.emailService.selected_element[0].tagName;
+    }
   }
 
   ngDoCheck() {
-    this.current_element = this.emailService.selected_element;
+    if (this.emailService.selected_element[0]) {
+      this.tagName = this.emailService.selected_element[0].tagName;
+    }
   }
-
 }

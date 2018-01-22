@@ -5,22 +5,30 @@ import { EmailService } from 'app/shared/email/email.service';
 import { DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
-  selector: 'app-content-component',
-  templateUrl: './content-component.component.html',
-  styleUrls: ['./content-component.component.css']
+  selector: "app-content-component",
+  templateUrl: "./content-component.component.html",
+  styleUrls: ["./content-component.component.css"]
 })
 export class ContentComponentComponent implements OnInit, DoCheck {
   private _current_element: any;
-  
-  public get current_element() : any {
+
+  public get current_element(): any {
     return this._current_element;
   }
-  
-  public set current_element(value : any) {
+
+  public set current_element(value: any) {
     this._current_element = value;
   }
 
-  constructor(private emailService: EmailService) { }
+  private onSrcChange(value) {
+    this.current_element[0].src = value;
+  }
+
+  private onHrefChange(value) {
+    this.current_element[0].href = value;
+  }
+
+  constructor(private emailService: EmailService) {}
 
   ngOnInit() {
     this.current_element = this.emailService.selected_element;

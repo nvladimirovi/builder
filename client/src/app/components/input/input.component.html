@@ -1,0 +1,5 @@
+<label for="{{ name }}">
+  {{ targetName }} {{ targetPropertyName ? targetPropertyName : null }}
+</label>
+
+<input type="{{ type }}" name="{{ name }}" value="{{ targetProperty }}" (keyup)="handleChange($event.target.value)">

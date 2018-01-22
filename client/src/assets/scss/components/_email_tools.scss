@@ -122,6 +122,7 @@
 
     .collapse-item {
         border-top: 1px solid color(darkgrey);  
+        display: block;
 
         &:last-child {
             border-bottom: 1px solid color(darkgrey);

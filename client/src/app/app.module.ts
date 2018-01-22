@@ -26,6 +26,7 @@ import { SpacingComponent } from './components/spacing/spacing.component';
 import { EmailComponent } from './components/email/email.component';
 import { ContentComponentComponent } from './components/content-component/content-component.component';
 import { TypeOfElementComponent } from './components/type-of-element/type-of-element.component';
+import { InputComponent } from './components/input/input.component';
 
 /**
  * Declarations - the view classes that belong to this module. Angular has three kinds of view classes: components, directives, and pipes.
@@ -50,7 +51,8 @@ import { TypeOfElementComponent } from './components/type-of-element/type-of-ele
     SpacingComponent,
     EmailComponent,
     ContentComponentComponent,
-    TypeOfElementComponent
+    TypeOfElementComponent,
+    InputComponent
   ],
   exports: [],
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule],
