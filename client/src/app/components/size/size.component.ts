@@ -15,8 +15,8 @@ declare var $:any;
   styleUrls: ['./size.component.css']
 })
 export class SizeComponent implements OnInit, DoCheck {
-  private _element: any;
-  private _range: any;
+  private _element: any = null;
+  private _range: any = null;
 
   private _initRangeSettings(settings: RangeSettings) {
     if (!$("#range")[0]) return;
@@ -60,15 +60,15 @@ export class SizeComponent implements OnInit, DoCheck {
   constructor(private emailService: EmailService) { }
 
   ngOnInit() {
-    this.element = this.emailService.selected_element;
+    if (this.emailService.selected_element) {
+      this.element = this.emailService.selected_element[0];
+    } 
   }
 
   ngDoCheck() {
-    
     if(this.emailService.selected_element) {
       this.element = this.emailService.selected_element[0];
       this._initRangeSettings({ min: 10, max: 640 });
     }
-    
   }
 }

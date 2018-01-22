@@ -1,4 +1,4 @@
-<label for="{{ name }}">
+<label *ngIf="targetName" for="{{ name }}">
   {{ targetName }} {{ targetPropertyName ? targetPropertyName : null }}
 </label>
 
