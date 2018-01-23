@@ -1,30 +1,57 @@
-<div class="content-component" [ngSwitch]="current_element[0].tagName">
+<div class="content-component" [ngSwitch]="element.tagName">
 	<div *ngSwitchCase="'IMG'">
-		<a href="#" class="btn blue">Load Image</a>
+		<div class="flex">
+			<a href="#" class="btn blue">Load Image</a>
+		</div> 
 		
 		<app-input 
 			class="flex"
 			[name]="src" 
 			[type]="text" 
-			[targetName]="current_element[0].tagName"
+			[targetName]="element.tagName"
 			targetPropertyName="SRC"
-			[targetProperty]="current_element[0].src"
+			[targetProperty]="element.src"
 			(onPropertyChange)="onSrcChange($event)">
+		</app-input>
+
+		<app-input 
+			class="flex"
+			[name]="alt" 
+			[type]="text" 
+			[targetName]="element.tagName"
+			targetPropertyName="ALT"
+			[targetProperty]="element.alt"
+			(onPropertyChange)="onAltChange($event)">
+		</app-input>
+	</div>
+
+	<div *ngSwitchCase="'A'">
+		<app-input 
+			class="flex"
+			[name]="href" 
+			[type]="text" 
+			[targetName]="element.tagName"
+			targetPropertyName="HREF"
+			[targetProperty]="element.href"
+			(onPropertyChange)="onHrefChange($event)">
+		</app-input>
+
+		<textarea class="content-textarea" name="textContent" id="textContent" [(ngModel)]="element.textContent"></textarea>
+	</div>
+
+	<div *ngSwitchCase="'TD'">
+		<app-input 
+			class="flex"
+			[name]="background" 
+			[type]="text" 
+			[targetName]="element.tagName"
+			targetPropertyName="BACKGROUND"
+			[targetProperty]="getBackground()"
+			(onPropertyChange)="onBackgroundChange($event)">
 		</app-input>
 	</div>
 
 	<div *ngSwitchDefault>
-		<app-input 
-		 	*ngIf="current_element[0].tagName === 'A'"
-			class="flex"
-			[name]="href" 
-			[type]="text" 
-			[targetName]="current_element[0].tagName"
-			targetPropertyName="HREF"
-			[targetProperty]="current_element[0].href"
-			(onPropertyChange)="onHrefChange($event)">
-		</app-input>
-
-		<textarea class="content-textarea" name="textContent" id="textContent" [(ngModel)]="current_element[0].textContent"></textarea>
+		<textarea class="content-textarea" name="textContent" id="textContent" [(ngModel)]="element.textContent"></textarea>
 	</div>
 </div>

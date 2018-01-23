@@ -10,31 +10,47 @@ import { DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
   styleUrls: ["./content-component.component.css"]
 })
 export class ContentComponentComponent implements OnInit, DoCheck {
-  private _current_element: any;
+  private _element: any;
 
-  public get current_element(): any {
-    return this._current_element;
+  public get element(): any {
+    return this._element;
   }
 
-  public set current_element(value: any) {
-    this._current_element = value;
+  public set element(value: any) {
+    this._element = value;
   }
 
-  private onSrcChange(value) {
-    this.current_element[0].src = value;
+  private onSrcChange(value: string) {
+    this.element.src = value;
   }
 
-  private onHrefChange(value) {
-    this.current_element[0].href = value;
+  private onAltChange(value: string) {
+    this.element.alt = value;
+  }
+
+  private onHrefChange(value: string) {
+    this.element.href = value;
+  }
+
+  private onBackgroundChange(value: string) {
+    this.element.style.backgroundColor = value;
+  }
+
+  private getBackground(): string {
+    return this.element ? this.element.style.backgroundColor : null;
   }
 
   constructor(private emailService: EmailService) {}
 
   ngOnInit() {
-    this.current_element = this.emailService.selected_element;
+    if (this.emailService.selected_element) {
+      this.element = this.emailService.selected_element[0];
+    }
   }
 
   ngDoCheck() {
-    this.current_element = this.emailService.selected_element;
+    if (this.emailService.selected_element) {
+      this.element = this.emailService.selected_element[0];
+    }
   }
 }
