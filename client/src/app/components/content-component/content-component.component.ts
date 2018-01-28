@@ -5,9 +5,9 @@ import { EmailService } from 'app/shared/email/email.service';
 import { DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
-  selector: "app-content-component",
-  templateUrl: "./content-component.component.html",
-  styleUrls: ["./content-component.component.css"]
+  selector: 'app-content-component',
+  templateUrl: './content-component.component.html',
+  styleUrls: ['./content-component.component.css']
 })
 export class ContentComponentComponent implements OnInit, DoCheck {
   private _element: any;
@@ -20,24 +20,43 @@ export class ContentComponentComponent implements OnInit, DoCheck {
     this._element = value;
   }
 
+  /**
+   * When change is detected change the src attr.
+   * @param value Source
+   */
   private onSrcChange(value: string) {
     this.element.src = value;
   }
 
+  /**
+   * When change is detected change the alt attr.
+   * @param value Alternate
+   */
   private onAltChange(value: string) {
     this.element.alt = value;
   }
 
+  /**
+   * When change is detected change the href.
+   * @param value Hyberlink
+   */
   private onHrefChange(value: string) {
     this.element.href = value;
   }
 
+  /**
+   * When change is detected change background style attr.
+   * @param value Background
+   */
   private onBackgroundChange(value: string) {
     this.element.style.backgroundColor = value;
   }
 
+  /**
+   * Get the background color.
+   */
   private getBackground(): string {
-    return this.element ? this.element.style.backgroundColor : null;
+    return this.element ? this.emailService.rgbToHex(this.element.style.backgroundColor) : null;
   }
 
   constructor(private emailService: EmailService) {}
