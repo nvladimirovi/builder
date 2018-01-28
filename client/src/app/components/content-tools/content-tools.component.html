@@ -1,10 +1,10 @@
 <div class="content-tools">
-	<app-type-of-element *ngIf="selected_element"></app-type-of-element>
+	<app-type-of-element *ngIf="element"></app-type-of-element>
 
-	<button *ngIf="selected_element" class="btn delete white-txt" (click)="this.emailService.deleteElement();">Delete</button>
+	<button *ngIf="element" class="btn delete white-txt" (click)="this.emailService.deleteElement();">Delete</button>
 
 	<div class="options">
-		<app-content-component *ngIf="selected_element"></app-content-component>
+		<app-content-component *ngIf="element"></app-content-component>
 		
 		<div class="tools-collapse">
 			<app-size class="collapse-item"></app-size>
@@ -12,4 +12,4 @@
 			<app-spacing class="collapse-item"></app-spacing>
 		</div>
 	</div>
-</div>
+</div> 
