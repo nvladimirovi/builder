@@ -3,7 +3,7 @@
 	<div class="toggle"></div>
 
 	<div class="inner-content size" *ngIf="element">
-		<input class="styled-range" id="range" type="range" name="range" value="{{element.width}}" (change)="onRangeChange()">
+		<input class="styled-range" id="range" type="range" name="range" value="{{element.clientWidth}}" (change)="onRangeChange()">
 
 		<div class="flex">
 			<app-number-component label="Width" [value]="element.clientWidth" (onValueChanged)="onWidthChange($event)"></app-number-component>

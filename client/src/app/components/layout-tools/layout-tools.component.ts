@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmailService } from 'app/shared/email/email.service';
 
 @Component({
   selector: 'app-layout-tools',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutToolsComponent implements OnInit {
 
-  constructor() { }
+  public drag(event) {
+    this.emailService.drag(event);
+  }
+
+  constructor(private emailService: EmailService) { }
 
   ngOnInit() {
   }

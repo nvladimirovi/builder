@@ -10,6 +10,10 @@
         size: calculateRem(12px); 
     }
 
+    &:hover {
+        cursor: pointer;
+    }
+
     &.grey_border {
         border: 1px solid color(darkgray);
     }
@@ -18,5 +22,13 @@
         background: color(blue);
         border: none;
         color: color(white); 
+    }
+
+    &.delete {
+        background: color(red);
+    }
+
+    &.white-txt {
+        color: color(white);
     }
 }

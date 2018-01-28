@@ -1,0 +1,124 @@
+.content-tools {
+    label,
+    input {
+        display: block;
+    }
+
+    .delete {
+        margin: 20px auto 0 auto;
+        max-width: 180px;
+        width: 100%;
+    }
+
+    .options {
+        .btn {
+            text-transform: capitalize;
+            margin: 0 auto;
+            max-width: 85px;
+            width: 100%;
+        }
+    }
+}
+
+.tools-collapse {
+    list-style: none;
+
+    .toggle {
+        position: absolute;
+        top: 13px;
+        right: 28px;
+        height: 15px;
+        width: 15px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:before,
+        &:after {
+            background: color(darkgrey);
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 14px;
+        }
+
+        &:after {
+            transform: rotate(90deg);
+        }
+
+        &.active {
+            &:after {
+                transform: rotate(0deg);
+            }
+        }
+    }
+
+    .title {
+        display: block;
+        padding: 10px 20px;
+        position: relative;
+        font: {
+            family: $OS;
+            size: calculateRem(12px);
+            weight: 600;
+        }
+    }
+
+    .inner-content {
+        display: none;
+        list-style: none;
+
+        &.active {
+            display: block;
+        }
+
+        .inner-item {
+            border: 0 !important;
+        }
+    }
+
+    .collapse-item {
+        border-top: 1px solid color(darkgrey);  
+        display: block;
+
+        &:last-child {
+            border-bottom: 1px solid color(darkgrey);
+        }
+    }
+}
+
+.size,
+.alignment,
+.spacing {
+    padding: 25px 0;
+}
+
+.size {
+    .flex {
+        @include flexbox(center, row nowrap, space-between);
+        padding-top: 25px;
+    }
+}
+
+.spacing {
+    padding-bottom: 0;
+
+    .number-component {
+        @include flexbox(center, row nowrap, flex-start);
+        padding-bottom: 25px;
+        max-width: none;
+
+        .flex {
+            width: cp(77, 303);
+        }
+
+        label {
+            display: block;
+            padding-right: 100px;
+            width: 50%;
+        }
+    }
+}

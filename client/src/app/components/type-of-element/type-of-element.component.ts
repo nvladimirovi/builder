@@ -10,28 +10,32 @@ import { DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 })
 export class TypeOfElementComponent implements OnInit, DoCheck {
   private _tagName: string;
-  
+
   public get tagName(): string {
     return this._tagName;
   }
-  
-  public set tagName(value : string) {
-    if(value) {
+
+  public set tagName(value: string) {
+    if (value) {
       this._tagName = value;
     }
   }
-  
+
   constructor(private emailService: EmailService) { }
 
   ngOnInit() {
-    if(this.emailService.selected_element[0]) {
+    if (this.emailService.selected_element[0]) {
       this.tagName = this.emailService.selected_element[0].tagName;
     }
   }
 
   ngDoCheck() {
-    if (this.emailService.selected_element[0]) {
+    if (
+      this.emailService.selected_element[0] &&
+      this.tagName !== this.emailService.selected_element[0].tagName
+    ) {
       this.tagName = this.emailService.selected_element[0].tagName;
+      //console.log('type of element do check');
     }
   }
 }

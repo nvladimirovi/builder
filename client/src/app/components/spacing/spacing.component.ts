@@ -3,9 +3,9 @@ import { EmailService } from 'app/shared/email/email.service';
 import { DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
-  selector: "app-spacing",
-  templateUrl: "./spacing.component.html",
-  styleUrls: ["./spacing.component.css"]
+  selector: 'app-spacing',
+  templateUrl: './spacing.component.html',
+  styleUrls: ['./spacing.component.css']
 })
 export class SpacingComponent implements OnInit, DoCheck {
   private _element: any = null;
@@ -19,19 +19,19 @@ export class SpacingComponent implements OnInit, DoCheck {
   }
 
   public onPaddingTopChanged(value: number) {
-    this.element.style.paddingTop = value + "px";
+    this.element.style.paddingTop = value + 'px';
   }
 
   public onPaddingBottomChanged(value: number) {
-    this.element.style.paddingBottom = value + "px";
+    this.element.style.paddingBottom = value + 'px';
   }
 
   public onPaddingLeftChanged(value: number) {
-    this.element.style.paddingLeft = value + "px";
+    this.element.style.paddingLeft = value + 'px';
   }
 
   public onPaddingRightChanged(value: number) {
-    this.element.style.paddingRight = value + "px";
+    this.element.style.paddingRight = value + 'px';
   }
 
   constructor(private emailService: EmailService) {}
@@ -43,8 +43,12 @@ export class SpacingComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    if (this.emailService.selected_element) {
+    if (
+      this.emailService.selected_element &&
+      this.element !== this.emailService.selected_element[0]
+    ) {
       this.element = this.emailService.selected_element[0];
+      //console.log('spacing do check');
     }
   }
 }

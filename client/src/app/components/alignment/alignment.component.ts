@@ -27,8 +27,12 @@ export class AlignmentComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    if (this.emailService.selected_element) {
+    if (
+      this.emailService.selected_element &&
+      this.element !== this.emailService.selected_element[0]
+    ) {
       this.element = this.emailService.selected_element[0];
+      //console.log('AlignmentComponent');
     }
   }
 }

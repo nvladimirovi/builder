@@ -6,6 +6,10 @@ export class EmailService {
   private _event_targets = '.result table, .result tr, .result td, .result a, .result p, .result img, .result font';
   private _selected_element;
 
+  get event_targets() {
+    return this._event_targets;
+  }
+
   /**
    * Get the x, y position of the
    * element.
@@ -25,7 +29,7 @@ export class EmailService {
   private _drawGrid() {
     const self = this;
 
-    $(self._event_targets).hover(function(event) {
+    $('body').on('mouseover', self._event_targets, function(event) {
       event.preventDefault();
       event.stopPropagation();
 
@@ -38,12 +42,19 @@ export class EmailService {
   }
 
   /**
+   * Return the encapsulated function.
+   */
+  public drawGrid() {
+    return this._drawGrid();
+  }
+
+  /**
    * Selects elements.
    */
   private _selectElement() {
     const self = this;
 
-    $(self._event_targets).on('click', function(event) {
+    $('body').on('click', self._event_targets, function(event) {
       event.preventDefault();
       event.stopPropagation();
 
@@ -55,13 +66,6 @@ export class EmailService {
 
       self.selected_element = element;
     });
-  }
-
-  /**
-   * Return the encapsulated function.
-   */
-  public drawGrid() {
-    return this._drawGrid();
   }
 
   /**
@@ -89,6 +93,13 @@ export class EmailService {
   }
 
   /**
+   * Delete selected element
+   */
+  public deleteElement() {
+    this.selected_element.remove();
+  }
+
+  /**
    * Transform color to hex
    * @param c for color in rgb
    */
@@ -103,14 +114,18 @@ export class EmailService {
    * @param g green
    * @param b blue
    */
-  private _rgbToHex(r: number, g: number , b: number): string {
-    if (r !== null && g !== null && b !== null) {
-        return (
-            '#' +
-            this._componentToHex(r) +
-            this._componentToHex(g) +
-            this._componentToHex(b)
-        );
+  private _rgbToHex(r: number, g: number, b: number): string {
+    if (
+      (r !== null && !isNaN(r)) &&
+      (g !== null && !isNaN(g)) &&
+      (b !== null && !isNaN(b))
+    ) {
+      return (
+        '#' +
+        this._componentToHex(r) +
+        this._componentToHex(g) +
+        this._componentToHex(b)
+      );
     }
   }
 
@@ -121,12 +136,14 @@ export class EmailService {
    * @param b bluue
    */
   public rgbToHex(rgb: string) {
-    if (!rgb) { return; }
-    console.log('called');
+    if (!rgb) {
+      return;
+    }
 
-    const rgbArray: string[] = rgb.substring(4, rgb.length - 1)
-    .replace(/ /g, '')
-    .split(',');
+    const rgbArray: string[] = rgb
+      .substring(4, rgb.length - 1)
+      .replace(/ /g, '')
+      .split(',');
 
     /**
      * Second parameter of pareseInt is
@@ -140,5 +157,90 @@ export class EmailService {
     const b = parseInt(rgbArray[2], 10);
 
     return this._rgbToHex(r, g, b);
+  }
+
+  /**
+   * Fired when an element or
+   * text selection is being
+   * dragged over a valid drop
+   * target (every few hundred milliseconds).
+   */
+  public dragOver() {
+    $('body').on('dragover', this.event_targets, function(event) {
+      if (!$(this).hasClass('ng_selected_item') || $(this).is('img')) { return; }
+      event.preventDefault();
+    });
+  }
+
+  /**
+   * Fired when a dragged element or
+   * text selection enters a valid drop target.
+   */
+  public dragEnter() {
+    $('body').on('dragenter', this.event_targets, function(event) {
+      event.stopPropagation();
+    });
+  }
+
+  /**
+   * Fired when a drag operation is
+   * being ended (for example,
+   * by releasing a mouse button
+   * or hitting the escape key).
+   */
+  public dragEnd() {
+    $('body').on('dragend', this.event_targets, function(event) {
+      event.stopPropagation();
+
+      if (!$(this).hasClass('ng_selected_item')) {
+        $(this).remove();
+      }
+    });
+  }
+
+  /**
+   * Fired when a dragged element or
+   * text selection leaves a valid drop target.
+   */
+  public dragLeave() {}
+
+  /**
+   * Fired when the user starts dragging an
+   * element or text selection.
+   */
+  public dragStart() {}
+
+  /**
+   * Inser the new element before or
+   * after the selected element.
+   */
+  public drop() {
+    $('body').on('drop', this.event_targets, function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const data = event.originalEvent.dataTransfer.getData('text/html');
+
+      if (event.originalEvent.offsetY <= $(this).height() / 2) {
+        $(data).insertBefore($(this));
+      } else {
+        $(this).parent().append(data);
+      }
+    });
+  }
+
+  /**
+   * Bind the drag event to predefined blocks.
+   * @param event
+   */
+  public drag(event) {
+    event.dataTransfer.setData('text/plain', event.target.id);
+    event
+      .dataTransfer
+      .setData(
+        'text/html',
+        '<font style="font-family:Roboto, Tahoma, sans-serif;color:#fff;font-size:15px;font-weight:300;">Example paragraph</p>'
+      );
+    event.dataTransfer.setData('text/uri-list', 'http://developer.mozilla.org');
   }
 }

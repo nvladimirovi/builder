@@ -56,7 +56,9 @@ export class ContentComponentComponent implements OnInit, DoCheck {
    * Get the background color.
    */
   private getBackground(): string {
-    return this.element ? this.emailService.rgbToHex(this.element.style.backgroundColor) : null;
+    if (this._element.style.backgroundColor !== '') {
+      return this.element ? this.emailService.rgbToHex(this.element.style.backgroundColor) : null;
+    }
   }
 
   constructor(private emailService: EmailService) {}
@@ -68,8 +70,12 @@ export class ContentComponentComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    if (this.emailService.selected_element) {
+    if (
+      this.emailService.selected_element &&
+      this.element !== this.emailService.selected_element[0]
+    ) {
       this.element = this.emailService.selected_element[0];
+      //console.log('ContentComponentComponent');
     }
   }
 }

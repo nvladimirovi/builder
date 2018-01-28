@@ -1,3 +1,17 @@
-<p>
-  layout-tools works!
-</p>
+<div class="layout-tools">
+  <div class="heading">
+    <h2>Drag and drop something</h2>
+  </div>
+
+  <div 
+    draggable="true" 
+    (dragstart)="this.drag($event)"
+    data-type="block1" 
+    class="blocks block1"></div>
+
+    <div 
+    draggable="true" 
+    (dragstart)="this.drag($event)"
+    data-type="block1" 
+    class="blocks block1"></div>
+</div>
