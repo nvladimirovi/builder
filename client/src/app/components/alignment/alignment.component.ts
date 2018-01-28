@@ -3,9 +3,9 @@ import { EmailService } from 'app/shared/email/email.service';
 import { DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
-  selector: "app-alignment",
-  templateUrl: "./alignment.component.html",
-  styleUrls: ["./alignment.component.css"]
+  selector: 'app-alignment',
+  templateUrl: './alignment.component.html',
+  styleUrls: ['./alignment.component.css']
 })
 export class AlignmentComponent implements OnInit, DoCheck {
   private _element: any;
@@ -14,10 +14,10 @@ export class AlignmentComponent implements OnInit, DoCheck {
     this._element = value;
   }
 
-  public get element() : any {
+  public get element(): any {
     return this._element;
   }
-  
+
   constructor(private emailService: EmailService) {}
 
   ngOnInit() {
