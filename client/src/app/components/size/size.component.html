@@ -3,11 +3,11 @@
 	<div class="toggle"></div>
 
 	<div class="inner-content size" *ngIf="element">
-		<input class="styled-range" id="range" type="range" name="range" value="{{element.clientWidth}}" (change)="onRangeChange()">
+		<input class="styled-range" id="range" type="range" name="range" [min]="10" [max]="this.emailService.baseWidth" [value]="element.clientWidth" (change)="onRangeChange($event)">
 
 		<div class="flex">
-			<app-number-component label="Width" [value]="element.clientWidth" (onValueChanged)="onWidthChange($event)"></app-number-component>
-			<app-number-component label="Height" [value]="element.clientHeight" (onValueChanged)="onHeightChange($event)"></app-number-component>
+			<app-number-component label="Width" [max]="this.emailService.baseWidth" [value]="element.clientWidth" (onValueChanged)="onWidthChange($event)"></app-number-component>
+			<app-number-component label="Height" [max]="this.emailService.baseWidth" [value]="element.clientHeight" (onValueChanged)="onHeightChange($event)"></app-number-component>
 		</div>
 	</div>
 </div>

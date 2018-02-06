@@ -10,25 +10,6 @@ declare var $: any;
 export class EmailComponent implements OnInit {
     private _selected_element;
 
-    private _drawGrid() {
-        this.emailService.drawGrid();
-    }
-
-    private _selectElement() {
-        this.emailService.selectElement();
-    }
-
-    /**
-     * Bind events on init
-     */
-    private _bindEvents() {
-        this._drawGrid();
-        this._selectElement();
-        this.emailService.dragOver();
-        this.emailService.drop();
-        this.emailService.dragEnd();
-    }
-
     /**
      * Get selected element
      */
@@ -45,7 +26,5 @@ export class EmailComponent implements OnInit {
 
     constructor(private emailService: EmailService) {}
 
-    ngOnInit() {
-        this._bindEvents();
-    }
+    ngOnInit() {}
 }

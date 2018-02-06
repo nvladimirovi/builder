@@ -18,18 +18,9 @@ export class SizeComponent implements OnInit, DoCheck {
   private _element: any = null;
   private _range: any = null;
 
-  private _initRangeSettings(settings: RangeSettings) {
-    if (!$('#range')[0]) { return; }
-
-    this.range = $('#range')[0];
-
-    this.range.min = settings.min ? settings.min : 0;
-    this.range.max = settings.max ? settings.max : 0;
-  }
-
-  private onRangeChange() {
-    this.element.width = this.range.value;
-    this.element.style.maxWidth = this.range.value + 'px';
+  private onRangeChange(event) {
+    this.element.width = event.target.value;
+    this.element.style.maxWidth = event.target.value + "px";
   }
 
   private onWidthChange(value) {
@@ -71,7 +62,6 @@ export class SizeComponent implements OnInit, DoCheck {
       this.element !== this.emailService.selected_element[0]
     ) {
       this.element = this.emailService.selected_element[0];
-      this._initRangeSettings({ min: 10, max: 640 });
       //console.log('spacing do check');
     }
   }

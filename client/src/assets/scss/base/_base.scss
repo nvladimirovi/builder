@@ -10,17 +10,17 @@
 }
 
 font {
-    &.ng_selected_item,
-    &.ng_hovered_item {
+    &.eb-selected-item,
+    &.eb-hovered-item {
         display: block;
     }
 }
 
 
-.ng_selected_item {
+.eb-selected-item {
     outline: 1px solid color(pink) !important;
 }
 
-.ng_hovered_item {
+.eb-hovered-item {
     outline: 1px solid color(blue);
 }

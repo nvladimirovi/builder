@@ -11,6 +11,7 @@ import { EventEmitter } from '@angular/core';
 export class NumberComponentComponent implements OnInit {
     @Input() public label: string;
     @Input() public value: number = 0;
+    @Input() public max: number;
     @Output() public onValueChanged = new EventEmitter<number>();
 
       public dec() {
@@ -21,6 +22,7 @@ export class NumberComponentComponent implements OnInit {
     }
 
       public inc() {
+        if (this.value >= this.max) { return; }
         this.value++;
         this.onValueChanged.emit(this.value);
     }

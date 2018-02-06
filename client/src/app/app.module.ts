@@ -4,16 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 //Service 
-import { CollectableService } from "app/shared/collectable/collectable.service";
 import { EmailService } from "app/shared/email/email.service";
-import { ElementService } from "app/shared/element/element.service";
 
 //Routing 
 import { AppRoutingModule } from "app/app-routing.module";
 
 //Components
 import { AppComponent } from './app.component';
-import { CollectionComponent } from "./components/collection/collection.component";
 import { HeaderComponent } from './components/header/header.component';
 import { ToolsNavComponent } from './components/tools-nav/tools-nav.component';
 import { LayoutToolsComponent } from './components/layout-tools/layout-tools.component';
@@ -26,7 +23,8 @@ import { SpacingComponent } from './components/spacing/spacing.component';
 import { EmailComponent } from './components/email/email.component';
 import { ContentComponentComponent } from './components/content-component/content-component.component';
 import { TypeOfElementComponent } from './components/type-of-element/type-of-element.component';
-import { InputComponent } from './components/input/input.component';
+import { InputComponent } from './components/input/input.component';  
+import { LayoutService } from 'app/shared/layout/layout.service';
 
 /**
  * Declarations - the view classes that belong to this module. Angular has three kinds of view classes: components, directives, and pipes.
@@ -40,7 +38,6 @@ import { InputComponent } from './components/input/input.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    CollectionComponent,
     ToolsNavComponent,
     LayoutToolsComponent,
     ContentToolsComponent,
@@ -56,7 +53,7 @@ import { InputComponent } from './components/input/input.component';
   ],
   exports: [],
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule],
-  providers: [EmailService, ElementService],
+  providers: [EmailService, LayoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
