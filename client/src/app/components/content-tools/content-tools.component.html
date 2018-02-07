@@ -1,7 +1,7 @@
 <div class="content-tools">
 	<app-type-of-element *ngIf="element"></app-type-of-element>
 
-	<button *ngIf="element" class="btn delete white-txt" (click)="this.emailService.deleteElement();">Delete</button>
+	<button *ngIf="element" class="btn delete white-txt" (click)="this.contentService.deleteElement(element);">Delete</button>
 
 	<div class="options">
 		<app-content-component *ngIf="element"></app-content-component>

@@ -3,16 +3,12 @@ import { EmailService } from 'app/shared/email/email.service';
 import { LayoutService } from 'app/shared/layout/layout.service';
 
 @Component({
-  selector: "app-layout-tools",
-  templateUrl: "./layout-tools.component.html",
-  styleUrls: ["./layout-tools.component.css"]
+  selector: 'app-layout-tools',
+  templateUrl: './layout-tools.component.html',
+  styleUrls: ['./layout-tools.component.css']
 })
 export class LayoutToolsComponent implements OnInit {
   public blocks = this.layoutService.blocks;
-
-  public drag(event): void {
-    this.layoutService._drag(event);
-  }
 
   constructor(private emailService: EmailService, private layoutService: LayoutService) {}
 

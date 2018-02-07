@@ -21,20 +21,4 @@
         min-width: 580px;
         min-height: 500px;
     }
-
-    .eb-module-empty {
-        background: rgba(222,242,250,.85);
-        outline: #2FAADE dashed 1px;
-        outline-offset: -1px;
-        min-height: 50px;
-
-        &:before {
-            content: attr(data-label);
-            font-size: 13px;
-            color: #2FAADE;
-            display: block;
-            line-height: 20px;
-            padding: 20px;
-        }
-    }
 }

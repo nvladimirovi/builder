@@ -3,6 +3,7 @@ import { Input } from '@angular/core/src/metadata/directives';
 import { NgSwitch, NgSwitchDefault } from '@angular/common';
 import { EmailService } from 'app/shared/email/email.service';
 import { DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ContentService } from 'app/shared/content/content.service';
 
 @Component({
   selector: 'app-content-component',
@@ -57,11 +58,11 @@ export class ContentComponentComponent implements OnInit, DoCheck {
    */
   private getBackground(): string {
     if (this._element.style.backgroundColor !== '') {
-      return this.element ? this.emailService.rgbToHex(this.element.style.backgroundColor) : null;
+      return this.element ? this.contentService.rgbToHex(this.element.style.backgroundColor) : null;
     }
   }
 
-  constructor(private emailService: EmailService) {}
+  constructor(private emailService: EmailService, private contentService: ContentService) {}
 
   ngOnInit() {
     if (this.emailService.selected_element) {
@@ -75,7 +76,6 @@ export class ContentComponentComponent implements OnInit, DoCheck {
       this.element !== this.emailService.selected_element[0]
     ) {
       this.element = this.emailService.selected_element[0];
-      //console.log('ContentComponentComponent');
     }
   }
 }

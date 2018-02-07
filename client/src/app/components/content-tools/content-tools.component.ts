@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OnChanges, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 
 import { EmailService } from '../../shared/email/email.service';
+import { ContentService } from 'app/shared/content/content.service';
 
 declare var $: any;
 
@@ -49,7 +50,7 @@ export class ContentToolsComponent implements OnInit, DoCheck {
         this._element = value;
     }
 
-    constructor(private emailService: EmailService) {}
+    constructor(private emailService: EmailService, private contentService: ContentService) {}
 
     ngOnInit() {
         this._bindEvents();
@@ -62,7 +63,6 @@ export class ContentToolsComponent implements OnInit, DoCheck {
             this.element !== this.emailService.selected_element[0]
           ) {
             this.element = this.emailService.selected_element[0];
-            //console.log('ContentToolsComponent');
         }
     }
 }

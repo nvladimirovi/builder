@@ -1,11 +1,27 @@
 import { Injectable } from '@angular/core';
-import { MapType } from '@angular/compiler/src/output/output_ast';
 
 declare var $: any;
 
 @Injectable()
 export class LayoutService {
   private _blocks_map = new Map<string, string>();
+  private _isBlock: boolean;
+  private _position: boolean;
+
+  /**
+   * Get position
+   */
+  get position(): boolean {
+    return this._position;
+  }
+
+  /**
+   * Set position
+   */
+
+  set position(value: boolean) {
+    this._position = value;
+  }
 
   /**
    * Get blocks
@@ -15,12 +31,26 @@ export class LayoutService {
   }
 
   /**
+   * Get isBlock
+   */
+  get isBlock(): boolean {
+    return this._isBlock;
+  }
+
+  /**
+   * Set isBlock
+   */
+  set isBlock(value: boolean) {
+    this._isBlock = value;
+  }
+
+  /**
    * Load blocks
    */
   private _loadBlocks() {
     this.blocks.set(
       "header",
-      "<table width='600' class='eb-editable eb-module eb-module-empty' cellpadding='0' cellspaceing='0'><tr><td valign='top' align='left'></td></tr></table>"
+      "<table width='600' class='eb-module eb-module-empty' cellpadding='0' cellspaceing='0'><tr><td valign='top' align='left'></td></tr></table>"
     );
     this.blocks.set(
       "two-columns",
@@ -52,11 +82,14 @@ export class LayoutService {
 
   /**
    * Fired when the user starts dragging an
-   * element or text selection.
+   * element or text selection. Bind the drag event to predefined blocks.
    */
-  private _dragStart() {
-    $("body").on("dragstart", ".eb-selected-item", function(event) {
-      console.log("dragStart", event);
+  public _dragStart() {
+    const self = this;
+    $('body').on('dragstart', '.block', function(event) {
+      const type: string = $(event.target).data().type;
+      event.originalEvent.dataTransfer.setData('text/html', self.blocks.get(type));
+      self.isBlock = true;
     });
   }
 
@@ -65,8 +98,10 @@ export class LayoutService {
    * text selection enters a valid drop target.
    */
   private _dragEnter() {
-    $("body").on("dragenter", ".eb-selected-item", function(event) {
-      console.log("dragEnter", event);
+    const self = this;
+    $('body').on('dragenter', '.eb-selected-item', function(event) {
+      if (!self.isBlock) { return; }
+      console.log('dragEnter', event);
     });
   }
 
@@ -77,9 +112,40 @@ export class LayoutService {
    * target (every few hundred milliseconds).
    */
   private _dragOver() {
-    $("body").on("dragover", ".eb-selected-item", function(event) {
-      console.log("dragover", event.detail);
-      event.preventDefault();
+    const self = this;
+    $('body').on('dragover', '.eb-selected-item, .eb-module', function(event) {
+      if (self.isBlock) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (!$(this).hasClass('eb-module')) { return; }
+
+        const middleOfElement: number = $(this).offset().top + $(this).height() / 2;
+        const eventYPos: number = event.originalEvent.pageY;
+
+        if (eventYPos <= middleOfElement) {
+
+          if ($(this).hasClass('eb-insert-before')) { return; }
+
+          if ($(this).hasClass('eb-insert-after')) {
+            $(this).removeClass('eb-insert-after');
+          }
+
+          $(this).addClass('eb-insert-before');
+          self.position = true;
+
+        } else {
+
+          if ($(this).hasClass('eb-insert-after')) { return; }
+
+          if ($(this).hasClass('eb-insert-before')) {
+            $(this).removeClass('eb-insert-before');
+          }
+
+          $(this).addClass('eb-insert-after');
+          self.position = false;
+        }
+      }
     });
   }
 
@@ -88,8 +154,17 @@ export class LayoutService {
    * text selection leaves a valid drop target.
    */
   private _dragLeave() {
-    $("body").on("dragleave", ".eb-selected-item", function(event) {
-      console.log("dragLeave", event);
+    const self = this;
+    $('body').on('dragleave', '.eb-selected-item, .eb-module', function(event) {
+      if (!self.isBlock) { return; }
+
+      if ($(this).hasClass('eb-insert-before')) {
+        $(this).removeClass('eb-insert-before');
+      }
+
+      if ($(this).hasClass('eb-insert-after')) {
+        $(this).removeClass('eb-insert-after');
+      }
     });
   }
 
@@ -100,8 +175,9 @@ export class LayoutService {
    * or hitting the escape key).
    */
   private _dragEnd() {
-    $("body").on("dragend", ".eb-selected-item", function(event) {
-      console.log("dragEnd", event);
+    const self = this;
+    $('body').on('dragend', '.block', function(event) {
+      self._isBlock = false;
     });
   }
 
@@ -110,24 +186,28 @@ export class LayoutService {
    * after the selected element.
    */
   private _drop() {
-    $("body").on("drop", ".eb-selected-item", function(event) {
-      console.log("drop", event);
+    const self = this;
+
+    $('body').on('drop', '.eb-selected-item, .eb-module', function(event) {
+      if (!self.isBlock) { return; }
+      console.log('drop', event);
       event.preventDefault();
       event.stopPropagation();
 
-      const data = event.originalEvent.dataTransfer.getData("text/html");
+      const data = event.originalEvent.dataTransfer.getData('text/html');
 
-      $(this).append(data);
+      if ($(this).hasClass('eb-module')) {
+        if (self.position) {
+          $(data).insertBefore('.eb-module.eb-insert-before');
+          $('.eb-module').removeClass('eb-insert-before');
+        } else {
+          $(data).insertAfter('.eb-module.eb-insert-after');
+          $('.eb-module').removeClass('eb-insert-after');
+        }
+      } else {
+        $(this).append(data);
+      }
     });
-  }
-
-  /**
-   * Bind the drag event to predefined blocks.
-   * @param event
-   */
-  public _drag(event) {
-    const type: string = $(event.target).data().type;
-    event.dataTransfer.setData("text/html", this.blocks.get(type));
   }
 
   /**
