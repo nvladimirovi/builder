@@ -38,4 +38,9 @@ export interface Draggable {
      * after the selected element.
      */
     drop(): void;
+
+    /**
+     * Init the events
+     */
+    dragAndDrop(): void;
 }

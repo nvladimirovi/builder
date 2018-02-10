@@ -5,8 +5,10 @@ declare var $: any;
 @Injectable()
 export class LayoutService implements Draggable {
   private _blocks_map = new Map<string, string>();
-  private _isBlock: boolean;
+  private _isModule: boolean;
   private _position: boolean;
+  private _selectedClass: string = '.eb-selected-item';
+  private _blockClass: string = '.block';
 
   /**
    * Get position
@@ -31,17 +33,17 @@ export class LayoutService implements Draggable {
   }
 
   /**
-   * Get isBlock
+   * Get isModule
    */
-  get isBlock(): boolean {
-    return this._isBlock;
+  get isModule(): boolean {
+    return this._isModule;
   }
 
   /**
-   * Set isBlock
+   * Set isModule
    */
-  set isBlock(value: boolean) {
-    this._isBlock = value;
+  set isModule(value: boolean) {
+    this._isModule = value;
   }
 
   /**
@@ -221,11 +223,10 @@ export class LayoutService implements Draggable {
    * element or text selection. Bind the drag event to predefined blocks.
    */
   public dragStart(): void {
-    const self = this;
-    $('body').on('dragstart', '.block', function(event) {
+    $('body').on('dragstart', this._blockClass, (event) => {
       const type: string = $(event.target).data().type;
-      event.originalEvent.dataTransfer.setData('text/html', self.blocks.get(type));
-      self.isBlock = true;
+      event.originalEvent.dataTransfer.setData('text/html', this.blocks.get(type));
+      this.isModule = true;
     });
   }
 
@@ -234,9 +235,8 @@ export class LayoutService implements Draggable {
    * text selection enters a valid drop target.
    */
   public dragEnter(): void {
-    const self = this;
-    $('body').on('dragenter', '.eb-selected-item', function(event) {
-      if (!self.isBlock) { return; }
+    $('body').on('dragenter', this._selectedClass, (event) => {
+      if (!this.isModule) { return; }
       // console.log('dragEnter', event);
     });
   }
@@ -249,8 +249,8 @@ export class LayoutService implements Draggable {
    */
   public dragOver(): void {
     const self = this;
-    $('body').on('dragover', '.eb-selected-item, .eb-module', function(event) {
-      if (self.isBlock) {
+    $('body').on('dragover', this._selectedClass + ', .eb-module', function(event) {
+      if (self.isModule) {
         event.preventDefault();
         event.stopPropagation();
 
@@ -291,8 +291,8 @@ export class LayoutService implements Draggable {
    */
   public dragLeave(): void {
     const self = this;
-    $('body').on('dragleave', '.eb-selected-item, .eb-module', function(event) {
-      if (!self.isBlock) { return; }
+    $('body').on('dragleave', this._selectedClass + ', .eb-module', function(event) {
+      if (!self.isModule) { return; }
 
       if ($(this).hasClass('eb-insert-before')) {
         $(this).removeClass('eb-insert-before');
@@ -311,9 +311,8 @@ export class LayoutService implements Draggable {
    * or hitting the escape key).
    */
   public dragEnd(): void {
-    const self = this;
-    $('body').on('dragend', '.block', function(event) {
-      self._isBlock = false;
+    $('body').on('dragend', this._blockClass, (event) => {
+      this._isModule = false;
     });
   }
 
@@ -324,8 +323,8 @@ export class LayoutService implements Draggable {
   public drop(): void {
     const self = this;
 
-    $('body').on('drop', '.eb-selected-item, .eb-module', function(event) {
-      if (!self.isBlock) { return; }
+    $('body').on('drop', this._selectedClass + ', .eb-module', function(event) {
+      if (!self.isModule) { return; }
       // console.log('drop', event);
       event.preventDefault();
       event.stopPropagation();
@@ -346,17 +345,21 @@ export class LayoutService implements Draggable {
     });
   }
 
-  /**
-   * Bind all events
-   */
-  private _bindEvents() {
-    this._loadBlocks();
+  public dragAndDrop(): void {
     this.dragStart();
     this.dragOver();
     this.dragEnter();
     this.dragLeave();
     this.dragEnd();
     this.drop();
+  }
+
+  /**
+   * Bind all events
+   */
+  private _bindEvents() {
+    this._loadBlocks();
+    this.dragAndDrop();
   }
 
   /**
