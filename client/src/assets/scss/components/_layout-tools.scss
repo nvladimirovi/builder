@@ -11,10 +11,25 @@
 
 .layout-blocks {
     .block {
+        line-height: 0;
         padding-bottom: 30px;
+        position: relative;
 
         &:last-child {
             padding-bottom: 0;
+        }
+    }
+
+    .drag-drop {
+        @include transform(0, 0);
+
+        &.start-dragging {
+            @include box-shadow(0px, 0px, 31px, -1px, color(black), 0.45);
+            position: absolute;
+        }
+
+        &.can-drop {
+            outline: 1px solid green;
         }
     }
 }

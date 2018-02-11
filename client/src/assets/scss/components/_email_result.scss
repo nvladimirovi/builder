@@ -21,4 +21,20 @@
         min-width: 580px;
         min-height: 500px;
     }
+
+    .eb-selected-item {
+        outline: 1px dashed color(pink) !important;
+    }
+    
+    .eb-hovered-item {
+        outline: 1px dashed color(blue);
+    }
+    
+    .drop-active {
+        outline-width: 2px;
+    }
+    
+    .drop-target {
+        outline-color: color(pink);
+    }
 }

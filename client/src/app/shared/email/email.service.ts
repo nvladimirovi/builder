@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Draggable } from '../../utilities/interfaces/draggable';
+const interact = require('interactjs');
 declare var $: any;
 
 @Injectable()
-export class EmailService implements Draggable {
-    private _event_targets: string = '.result .eb-editable, .result .eb-module';
+export class EmailService {
+    private _event_targets: string = '.result .eb-editable';
     private _baseWidth: number = 640;
     private _selected_element;
     private _isModule: boolean;
-    private _position: boolean;
+    private _position: number;
 
     /**
      * Get position
      */
-    get position(): boolean {
+    public get position(): number {
         return this._position;
     }
 
@@ -21,7 +21,7 @@ export class EmailService implements Draggable {
      * Set position
      */
 
-    set position(value: boolean) {
+    public set position(value: number) {
         this._position = value;
     }
 
@@ -99,161 +99,75 @@ export class EmailService implements Draggable {
             event.stopPropagation();
 
             $('.eb-selected-item').removeClass('eb-selected-item');
-            self._disableDraggable('.result .eb-module.eb-selected-item');
 
             const element = $(this);
 
             element.addClass('eb-selected-item');
 
             self.selected_element = element;
-
-            self._enableDraggable('.result .eb-module.eb-selected-item');
-        });
-    }
-
-    /**
-     * Make target draggable
-     * @param target string of classes
-     */
-    private _enableDraggable(target: string) {
-        $(target).attr({
-            draggable: true
-        });
-    }
-
-    /**
-     * Disable draggable
-     */
-    private _disableDraggable(target: string) {
-        $(target).attr({
-            draggable: false
-        });
-    }
-
-    /**
-     * Fired when the user starts dragging an
-     * element or text selection. Bind the drag event to predefined blocks.
-     */
-    public dragStart(): void {
-        $('body').on('dragstart', '.result .eb-module.eb-selected-item', (event) => {
-            event.originalEvent.dataTransfer.setData('text/plain', '.eb-module.eb-selected-item');
-            this.isModule = true;
-        });
-    }
-
-    /**
-     * Fired when a dragged element or
-     * text selection enters a valid drop target.
-     */
-    public dragEnter(): void {}
-
-    /**
-     * Fired when an element or
-     * text selection is being
-     * dragged over a valid drop
-     * target (every few hundred milliseconds).
-     */
-    public dragOver(): void {
-        const self = this;
-        $('body').on('dragover', '.result .eb-module', function(event) {
-            if (self.isModule) {
-                event.preventDefault();
-                event.stopPropagation();
-
-                if (!$(this).hasClass('eb-module') || $(this).hasClass('eb-selected-item')) { return; }
-
-                const middleOfElement: number = $(this).offset().top + $(this).height() / 2;
-                const eventYPos: number = event.originalEvent.pageY;
-
-                if (eventYPos <= middleOfElement) {
-
-                    if ($(this).hasClass('eb-insert-before')) { return; }
-
-                    if ($(this).hasClass('eb-insert-after')) {
-                        $(this).removeClass('eb-insert-after');
-                    }
-
-                    $(this).addClass('eb-insert-before');
-                    self.position = true;
-
-                } else {
-
-                    if ($(this).hasClass('eb-insert-after')) { return; }
-
-                    if ($(this).hasClass('eb-insert-before')) {
-                        $(this).removeClass('eb-insert-before');
-                    }
-
-                    $(this).addClass('eb-insert-after');
-                    self.position = false;
-                }
-            }
-        });
-    }
-
-    /**
-     * Fired when a dragged element or
-     * text selection leaves a valid drop target.
-     */
-    public dragLeave(): void {
-        const self = this;
-        $('body').on('dragleave', '.result .eb-module', function(event) {
-            if (!self.isModule) { return; }
-
-            if ($(this).hasClass('eb-insert-before')) {
-                $(this).removeClass('eb-insert-before');
-            }
-
-            if ($(this).hasClass('eb-insert-after')) {
-                $(this).removeClass('eb-insert-after');
-            }
-        });
-    }
-
-    /**
-     * Fired when a drag operation is
-     * being ended (for example,
-     * by releasing a mouse button
-     * or hitting the escape key).
-     */
-    public dragEnd(): void {
-        $('body').on('dragend', '.result .eb-module.eb-selected-item', (event) => {
-            this._isModule = false;
-        });
-    }
-
-    /**
-     * Insert the new element before or
-     * after the selected element.
-     */
-    public drop(): void {
-        const self = this;
-
-        $('body').on('drop', '.result .eb-module', function(event) {
-            console.log('drop', event);
-            event.preventDefault();
-            event.stopPropagation();
-
-            const data = event.originalEvent.dataTransfer.getData('text/plain');
-
-            if ($(this).hasClass('eb-module')) {
-                if (self.position) {
-                    $(data).insertBefore('.eb-module.eb-insert-before');
-                    $('.eb-module').removeClass('eb-insert-before');
-                } else {
-                    $(data).insertAfter('.eb-module.eb-insert-after');
-                    $('.eb-module').removeClass('eb-insert-after');
-                }
-            }
         });
     }
 
     public dragAndDrop(): void {
-        this.dragStart();
-        this.dragOver();
-        this.dragLeave();
-        this.drop();
-      }
+        // enable draggables to be dropped into this
+        interact('.result body, .result .eb-module').dropzone({
+            // only accept elements matching this CSS selector
+            accept: '#yes-drop',
+            // Require a 75% element overlap for a drop to be possible
+            overlap: 0.75,
+            // listen for drop related events:
+            ondropactivate: function(event) {
+                // add active dropzone feedback
+                const target = event.target;
+
+                $(target).addClass('drop-active');
+            },
+            ondragenter: function(event) {
+                const draggableElement = event.relatedTarget;
+                const dropzoneElement = event.target;
+
+                // feedback the possibility of a drop
+                $(dropzoneElement).addClass('drop-target');
+                $(draggableElement).addClass('can-drop');
+            },
+            ondragleave: function(event) {
+                // remove the drop feedback style
+                const target = event.target;
+
+                $(target).removeClass('drop-target');
+                $(target).removeClass('can-drop');
+            },
+            ondrop: (event) => {
+                const dropzoneElement = event.target;
+                const element = event.draggable.options.accept;
+
+                const dropzoneOffset = $(dropzoneElement).offset().top + ($(dropzoneElement).height() / 2);
+
+                console.log($(dropzoneElement).offset().top, dropzoneOffset);
+
+                if ($(dropzoneElement).hasClass('eb-module')) {
+                        // Insert before the dropzone.
+                        if (this.position < dropzoneOffset) {
+                            $(element).insertBefore(dropzoneElement);
+                        } else {
+                            $(element).insertAfter(dropzoneElement);
+                        }
+                } else {
+                    // Insert to the dropzone.
+                    $(dropzoneElement).append(element);
+                }
+
+                $(window).off('mousemove');
+            },
+            ondropdeactivate: function(event) {
+                // remove active dropzone feedback
+                const target = event.target;
+
+                $(target).removeClass('drop-active');
+                $(target).removeClass('drop-target');
+            }
+        });
+    }
 
     private _bindEvents(): void {
         this._drawGrid();
