@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EmailService } from '../email/email.service';
-const interact = require('interactjs');
 declare var $: any;
+declare var interact: any;
 
 @Injectable()
 export class LayoutService {
