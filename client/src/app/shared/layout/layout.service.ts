@@ -14,7 +14,7 @@ export class LayoutService {
     /**
      * Get position
      */
-    get position(): boolean {
+    public get position(): boolean {
         return this._position;
     }
 
@@ -22,7 +22,7 @@ export class LayoutService {
      * Set position
      */
 
-    set position(value: boolean) {
+    public set position(value: boolean) {
         this._position = value;
     }
 
@@ -34,26 +34,12 @@ export class LayoutService {
     }
 
     /**
-     * Get isModule
-     */
-    get isModule(): boolean {
-        return this._isModule;
-    }
-
-    /**
-     * Set isModule
-     */
-    set isModule(value: boolean) {
-        this._isModule = value;
-    }
-
-    /**
      * Load blocks
      */
-    public _loadBlocks() {
+    private _loadBlocks() {
         this.blocks.set(
             'header',
-            `<table width='600' class='eb-module eb-module-empty eb-editable'
+            `<table id="yes-drop" width='600' class='eb-module eb-module-empty eb-editable'
             cellpadding='0' cellspaceing='0'><tr><td valign='top' align='left'></td></tr></table>`
         );
         this.blocks.set(
@@ -222,7 +208,27 @@ export class LayoutService {
         );
     }
 
-    public dragAndDrop(): void {
+    private _onMove(event) {
+        const target = event.target;
+
+        // keep the dragged position in the data-x/data-y attributes
+        const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+        const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+        // translate the element
+        target.style.webkitTransform = target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+        // update the posiion attributes
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+
+        this.emailService.position = $(target).offset().top;
+        // console.log($('.result')[0].scrollTop);
+    }
+
+    /**
+     * Create draggable objects.
+     */
+    private _draggable(): void {
         interact('.draggable').draggable({
             // enable inertial throwing
             inertia: true,
@@ -242,27 +248,11 @@ export class LayoutService {
                 $(target).parent().append(clone);
             },
             // call this function on every dragmove event
-            onmove: (event) => {
-                const target = event.target;
-
-                // keep the dragged position in the data-x/data-y attributes
-                const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-                const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-                // translate the element
-                target.style.webkitTransform = target.style.transform =
-                'translate(' + x + 'px, ' + y + 'px)';
-                // update the posiion attributes
-                target.setAttribute('data-x', x);
-                target.setAttribute('data-y', y);
-
-                this.emailService.position = $(target).offset().top;
-                // console.log($('.result')[0].scrollTop);
-            },
+            onmove: this._onMove.bind(this),
             // call this function on every dragend event
             onend: (event) => {
-                // console.log('onEnd', event);
                 const target = event.target;
-                // console.log($(target).data().block);
+                // Pass the html block
                 event.interactable.options.accept = this.blocks.get($(target).data().block);
                 $(target).remove();
             }
@@ -270,11 +260,11 @@ export class LayoutService {
     }
 
     /**
-     * Bind all events
+     * Bind all events here.
      */
     private _bindEvents() {
         this._loadBlocks();
-        this.dragAndDrop();
+        this._draggable();
     }
 
     /**

@@ -26,20 +26,6 @@ export class EmailService {
     }
 
     /**
-     * Get isModule
-     */
-    get isModule(): boolean {
-        return this._isModule;
-    }
-
-    /**
-     * Set isModule
-     */
-    set isModule(value: boolean) {
-        this._isModule = value;
-    }
-
-    /**
      * Get the selected element
      */
     public get selected_element() {
@@ -89,7 +75,7 @@ export class EmailService {
     }
 
     /**
-     * Selects elements.
+     * Selects elements and add indication.
      */
     private _selectElement(): void {
         const self = this;
@@ -108,11 +94,129 @@ export class EmailService {
         });
     }
 
-    public dragAndDrop(): void {
+    /**
+     * Triggered when start to drag element
+     * @param event 
+     */
+    private _onMove(event): void {
+        const target = event.target;
+
+        // keep the dragged position in the data-x/data-y attributes
+        const x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
+        const y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
+        // translate the element
+        target.style.webkitTransform = target.style.transform = "translate(" + x + "px, " + y + "px)";
+        // update the posiion attributes
+        target.setAttribute("data-x", x);
+        target.setAttribute("data-y", y);
+    }
+
+    /**
+     * Add new element before or after the dropzone dependant of the position.
+     * @param element html string which is loaded by _loadBlocks in Layout Service
+     * @param dropzoneElement where element will be placed
+     * @param dropzoneOffset the position of the dropzone
+     */
+    private _appendNewElement(element: any, dropzoneElement: any, dropzoneOffset: number): void {
+        if (this.position < dropzoneOffset) {
+            // Insert before the dropzone.
+            $(element).insertBefore(dropzoneElement);
+        } else {
+            // Insert after the dropzone.
+            $(element).insertAfter(dropzoneElement);
+        }
+    }
+
+    /**
+     * Triggered when you want to move one elment to another place.
+     * @param draggableElement element which you drag.
+     * @param dropzoneElement where element will be placed
+     * @param dropzoneOffset the position of the dropzone
+     */
+    private _moveElement(draggableElement: any, dropzoneElement: any, dropzoneOffset: number): void {
+        const draggableElementClone = $(draggableElement)
+            .clone(false)
+            .css({ transform: "none" })
+            .attr({ "data-x": 0, "data-y": 0 });
+
+        if ($(draggableElement).offset().top < dropzoneOffset) {
+            // Insert before the dropzone.
+            $(draggableElementClone).insertBefore(dropzoneElement);
+        } else {
+            // Insert after the dropzone.
+            $(draggableElementClone).insertAfter(dropzoneElement);
+        }
+
+        $(draggableElement).remove();
+    }
+
+    /**
+     * Triggered on drop.
+     * @param event 
+     */
+    private _onDrop(event): void {
+        const dropzoneElement = event.target;
+        const element = event.draggable.options.accept;
+        const draggableElement = event.relatedTarget;
+
+        if (!$(dropzoneElement).hasClass("eb-module")) {
+          // Insert to the dropzone.
+          if ($(draggableElement).hasClass("eb-selected-item")) {
+                $(draggableElement)
+                    .css({ transform: "none" })
+                    .attr({ "data-x": 0, "data-y": 0 });
+          }
+
+          $(dropzoneElement).append(element);
+          return;
+        }
+
+        const dropzoneOffset = $(dropzoneElement).offset().top + $(dropzoneElement).height() / 2;
+        
+        if (!$(draggableElement).hasClass("eb-selected-item")) {
+            this._appendNewElement(element, dropzoneElement, dropzoneOffset);
+        } else {
+            this._moveElement(draggableElement, dropzoneElement, dropzoneOffset);
+        }
+        return;
+    }
+
+    /** 
+     * Set draggable objects.
+     */
+    private _draggable(): void {
+        interact('.eb-module.eb-selected-item').draggable({
+            // enable inertial throwing
+            inertia: true,
+            // keep the element within the area of it's parent
+            restrict: {
+                restriction: $('.result')[0],
+                endOnly: true,
+                elementRect: { top: 0, left: 0, bottom: 0, right: 0 }
+            },
+            // enable autoScroll
+            autoScroll: true,
+            onstart: function(event) {
+                const target = event.target;
+                $(target).addClass('start-dragging');
+            },
+            // call this function on every dragmove event
+            onmove: this._onMove,
+            // call this function on every dragend event
+            onend: (event) => {
+                const target = event.target;
+            }
+        });
+    }
+
+    /** 
+     * Set dropzone objects.
+     */
+    private _dropZone(): void {
         // enable draggables to be dropped into this
         interact('.result body, .result .eb-module').dropzone({
             // only accept elements matching this CSS selector
-            accept: '#yes-drop',
+            accept: '#yes-drop, .eb-module.eb-selected-item',
             // Require a 75% element overlap for a drop to be possible
             overlap: 0.75,
             // listen for drop related events:
@@ -125,7 +229,7 @@ export class EmailService {
             ondragenter: function(event) {
                 const draggableElement = event.relatedTarget;
                 const dropzoneElement = event.target;
-
+                
                 // feedback the possibility of a drop
                 $(dropzoneElement).addClass('drop-target');
                 $(draggableElement).addClass('can-drop');
@@ -137,28 +241,7 @@ export class EmailService {
                 $(target).removeClass('drop-target');
                 $(target).removeClass('can-drop');
             },
-            ondrop: (event) => {
-                const dropzoneElement = event.target;
-                const element = event.draggable.options.accept;
-
-                const dropzoneOffset = $(dropzoneElement).offset().top + ($(dropzoneElement).height() / 2);
-
-                console.log($(dropzoneElement).offset().top, dropzoneOffset);
-
-                if ($(dropzoneElement).hasClass('eb-module')) {
-                        // Insert before the dropzone.
-                        if (this.position < dropzoneOffset) {
-                            $(element).insertBefore(dropzoneElement);
-                        } else {
-                            $(element).insertAfter(dropzoneElement);
-                        }
-                } else {
-                    // Insert to the dropzone.
-                    $(dropzoneElement).append(element);
-                }
-
-                $(window).off('mousemove');
-            },
+            ondrop: this._onDrop.bind(this),
             ondropdeactivate: function(event) {
                 // remove active dropzone feedback
                 const target = event.target;
@@ -169,10 +252,14 @@ export class EmailService {
         });
     }
 
+    /**
+     * Bind all events here.
+     */
     private _bindEvents(): void {
         this._drawGrid();
         this._selectElement();
-        this.dragAndDrop();
+        this._dropZone();
+        this._draggable();
     }
 
     constructor() {

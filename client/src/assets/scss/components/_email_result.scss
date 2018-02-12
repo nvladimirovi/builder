@@ -23,18 +23,21 @@
     }
 
     .eb-selected-item {
-        outline: 1px dashed color(pink) !important;
+        background: color(blue);
+        z-index: 1;
     }
     
     .eb-hovered-item {
-        outline: 1px dashed color(blue);
+        outline: 1px solid color(blue);
     }
     
+    /*
+    This classes are used by drag and drop func to indecate what is going on. 
     .drop-active {
         outline-width: 2px;
     }
     
     .drop-target {
         outline-color: color(pink);
-    }
+    } */
 }
