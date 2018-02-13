@@ -9,6 +9,7 @@ export class EmailService {
     private _selected_element;
     private _isModule: boolean;
     private _position: number;
+    private _isDropped: boolean;
 
     /**
      * Get position
@@ -54,6 +55,20 @@ export class EmailService {
      */
     public get event_targets(): string {
         return this._event_targets;
+    }
+
+    /**
+     * Get is dropped.
+     */
+    public get isDropped(): boolean {
+        return this._isDropped;
+    }
+
+    /**
+     * Set is dropped
+     */
+    public set isDropped(value: boolean) {
+        this._isDropped = value;
     }
 
     /**
@@ -159,6 +174,8 @@ export class EmailService {
         const element = event.draggable.options.accept;
         const draggableElement = event.relatedTarget;
 
+        this.isDropped = true;
+
         if (!$(dropzoneElement).hasClass("eb-module")) {
           // Insert to the dropzone.
           if ($(draggableElement).hasClass("eb-selected-item")) {
@@ -181,18 +198,35 @@ export class EmailService {
         return;
     }
 
+    private _ondropDeactivate(event) {
+        const target = event.target;
+
+        if(this.isDropped) {
+            // remove active dropzone feedback
+            
+            $(target).removeClass("drop-active");
+            $(target).removeClass("drop-target");
+            this.isDropped = false;
+
+        } else {
+            $(event.relatedTarget)
+                .css({ transform: "none" })
+                .attr({ "data-x": 0, "data-y": 0 });
+        }
+    }
+
     /** 
      * Set draggable objects.
      */
     private _draggable(): void {
         interact('.eb-module.eb-selected-item').draggable({
             // enable inertial throwing
-            inertia: true,
+            inertia: false,
             // keep the element within the area of it's parent
             restrict: {
                 restriction: $('.result')[0],
-                endOnly: true,
-                elementRect: { top: 0, left: 0, bottom: 0, right: 0 }
+                endOnly: false,
+                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
             },
             // enable autoScroll
             autoScroll: true,
@@ -242,13 +276,7 @@ export class EmailService {
                 $(target).removeClass('can-drop');
             },
             ondrop: this._onDrop.bind(this),
-            ondropdeactivate: function(event) {
-                // remove active dropzone feedback
-                const target = event.target;
-
-                $(target).removeClass('drop-active');
-                $(target).removeClass('drop-target');
-            }
+            ondropdeactivate: this._ondropDeactivate.bind(this)
         });
     }
 
